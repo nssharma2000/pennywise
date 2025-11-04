@@ -1,18 +1,17 @@
 import { createResource, type Component } from "solid-js";
 import { db } from "~/db/schema";
+import { useAccounts } from "~/hooks/useAccounts";
 import { useProfile } from "~/hooks/useProfiles";
 
 const Dashboard: Component = () => {
   const [stats] = createResource(async () => {
-    const [accounts, expenses] = await Promise.all([
-      db.accounts.toArray(),
-      db.expenses.toArray(),
-    ]);
+    const [expenses] = await Promise.all([db.expenses.toArray()]);
+    const { accounts } = useAccounts();
     const { profile } = useProfile();
 
     const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
-    const expensesByAccount = accounts.map((account) => ({
+    const expensesByAccount = accounts()?.map((account) => ({
       account,
       total: expenses
         .filter((exp) => exp.accountId === account.id)

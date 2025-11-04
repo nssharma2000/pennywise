@@ -1,8 +1,9 @@
-import { User, User2, UserCircle2, UserCircleIcon } from "lucide-solid";
+import { User, UserCircleIcon } from "lucide-solid";
 import { createSignal, Show, type Component } from "solid-js";
 import ProfileForm from "~/components/forms/ProfileForm";
 import { useProfile } from "~/hooks/useProfiles";
 import type { ProfileType } from "~/types";
+import { format } from "date-fns";
 
 const Profile: Component = () => {
   const [isModifyingProfile, setIsModifyingProfile] = createSignal(false);
@@ -52,10 +53,14 @@ const Profile: Component = () => {
         <p class="text-gray-200">
           Currency: <span class="font-bold">{profile()?.currency}</span>
         </p>
-        <p class="text-gray-200">
-          Last UpdatedAt:{" "}
-          <span class="font-bold">{profile()?.updatedAt.toLocaleString()}</span>
-        </p>
+        <Show when={profile()?.updatedAt}>
+          <p class="text-gray-200">
+            Last UpdatedAt:{" "}
+            <span class="font-bold">
+              {format(profile()?.updatedAt!, "PPpp")}
+            </span>
+          </p>
+        </Show>
       </Show>
 
       <Show when={isModifyingProfile()}>

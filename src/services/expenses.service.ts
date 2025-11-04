@@ -31,6 +31,33 @@ export const expenseService = {
     return await db.expenses.where("category").equals(category).toArray();
   },
 
+  getByCategoryAndAccount: async (
+    category: string,
+    accountId: string,
+  ): Promise<ExpenseType[]> => {
+    return await db.expenses
+      .where("category")
+      .equals(category)
+      .and((expense) => expense.accountId === accountId)
+      .toArray();
+  },
+
+  getByCategoryAndAccountAndDateRange: async (
+    category: string,
+    accountId: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<ExpenseType[]> => {
+    return await db.expenses
+      .where("date")
+      .between(startDate, endDate, true, true)
+      .and(
+        (expense) =>
+          expense.accountId === accountId && expense.category === category,
+      )
+      .toArray();
+  },
+
   // Create expense
   create: async (
     data: Omit<ExpenseType, "id" | "createdAt">,

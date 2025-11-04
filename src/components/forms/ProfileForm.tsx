@@ -53,7 +53,7 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
-                {field().state.meta.errors[0]?.toString()}
+                {field().state.meta.errors[0]?.message}
               </p>
             </Show>
           </div>
@@ -61,7 +61,12 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
       </form.Field>
 
       {/* Monthly Income */}
-      <form.Field name="monthlyIncome">
+      <form.Field
+        name="monthlyIncome"
+        validators={{
+          onChange: profileSchema.shape.monthlyIncome,
+        }}
+      >
         {(field) => (
           <div>
             <label class="block text-sm font-medium mb-1">Monthly Income</label>
@@ -74,6 +79,11 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
               }
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            <Show when={field().state.meta.errors.length > 0}>
+              <p class="text-red-500 text-sm mt-1">
+                {field().state.meta.errors[0]?.message}
+              </p>
+            </Show>
           </div>
         )}
       </form.Field>
