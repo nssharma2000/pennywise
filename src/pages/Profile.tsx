@@ -35,8 +35,10 @@ const Profile: Component = () => {
       <Show when={!loading() && !profile()}>
         <div class="flex flex-col gap-2 items-center justify-center text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
           <UserCircleIcon size={48} class="text-gray-400" />
-          <h3 class="text-lg font-semibold text-gray-700">No accounts yet</h3>
-          <p class="text-gray-500">Get started by adding your first account</p>
+          <h3 class="text-lg font-semibold text-gray-700">
+            Profile not set yet
+          </h3>
+          <p class="text-gray-500">Get started by adding your details</p>
           <button
             onClick={() => setIsModifyingProfile(true)}
             class="flex gap-4 items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

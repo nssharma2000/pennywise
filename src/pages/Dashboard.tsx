@@ -12,6 +12,7 @@ import { useProfile } from "~/hooks/useProfiles";
 
 const renderDashboardCard = (
   val: string | number | undefined | null,
+  out: string | number | undefined | null,
   isLoading: boolean,
   fallback?: JSXElement,
 ) =>
@@ -20,7 +21,7 @@ const renderDashboardCard = (
       <Loader size={20} />
     </span>
   ) : val ? (
-    val
+    out
   ) : (
     fallback
   );
@@ -52,6 +53,7 @@ const Dashboard: Component = () => {
         Total Expenses:{" "}
         <span class="font-bold text-base">
           {renderDashboardCard(
+            totalExpenses(),
             `${currency} ${totalExpenses()}`,
             expensesLoading(),
             "0",
@@ -63,6 +65,7 @@ const Dashboard: Component = () => {
         Monthly Income:{" "}
         <span class="font-bold text-base">
           {renderDashboardCard(
+            profile()?.monthlyIncome,
             `${currency} ${profile()?.monthlyIncome}`,
             profileLoading(),
             "No Income",
@@ -74,6 +77,7 @@ const Dashboard: Component = () => {
         Accounts:
         <span class="font-bold text-base">
           {renderDashboardCard(
+            accounts()?.length,
             `${accounts()?.length}`,
             accountsLoading(),
             "No Accounts",

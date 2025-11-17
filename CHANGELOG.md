@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [v0.5] - 2025-11-05 _(Upcoming)_
+## [v0.5] - 2025-11-05
 
 ### Added
 
@@ -18,10 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improved
 
 - Polished UI spacing and responsiveness for dashboard components.
-
-### Planned Next
-
-- Loaders for key dashboard sections.
 
 ---
 
