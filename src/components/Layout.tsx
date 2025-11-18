@@ -1,40 +1,24 @@
 import { Show, type Component, type JSXElement } from "solid-js";
 import { A } from "@solidjs/router";
-import { Home, CreditCard, Receipt, User } from "lucide-solid";
+import {
+  Home,
+  CreditCard,
+  Receipt,
+  User,
+  LucideGitGraph,
+  ChartArea,
+} from "lucide-solid";
 import { useServiceWorker } from "~/hooks/useServiceWorker";
 import { useInstallPrompt } from "~/hooks/useInstallPrompt";
 import UIButton from "./ui/Button";
 
 const Layout: Component<{ children?: JSXElement }> = (props) => {
-  const { needRefresh, reloadApp, offlineReady } = useServiceWorker();
-  const { canInstall, promptInstall } = useInstallPrompt();
-
   return (
     <div class="min-h-screen bg-background pb-20">
-      {/*PWA*/}
-      <Show when={needRefresh()}>
-        <div class="fixed bottom-4 inset-x-0 mx-auto w-fit bg-slate-800 text-white px-4 py-2 rounded-lg shadow-md">
-          New version available.{" "}
-          <UIButton class="underline" onClick={reloadApp}>
-            Reload
-          </UIButton>
-        </div>
-      </Show>
-      <Show when={offlineReady()}>
-        <div class="fixed bottom-18 inset-x-0 mx-auto w-fit bg-green-600 text-white px-2 py-1 rounded-lg shadow-md z-200 text-xs opacity-45">
-          App ready to work offline
-        </div>
-      </Show>
-
       {/* Header */}
       <header class="sticky top-0 z-10 bg-background border-b border-border w-screen">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
           <h1 class="text-lg font-bold">PennyWise</h1>
-          <Show when={canInstall()}>
-            <UIButton onClick={promptInstall} class="w-max">
-              Install PennyWise
-            </UIButton>
-          </Show>
         </div>
       </header>
 
@@ -46,17 +30,17 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
         <div class="container mx-auto px-4">
           <div class="flex justify-around py-3">
             <A
-              href="/"
-              class="flex flex-col items-center gap-1 text-sm"
+              href="/dashboard"
+              class="flex flex-col items-center gap-1 text-xs"
               activeClass="text-foreground font-semibold"
               inactiveClass="text-foreground/60"
             >
-              <Home size={24} />
-              <span>Home</span>
+              <ChartArea size={24} />
+              <span>Stats</span>
             </A>
             <A
               href="/accounts"
-              class="flex flex-col items-center gap-1 text-sm"
+              class="flex flex-col items-center gap-1 text-xs"
               activeClass="text-foreground font-semibold"
               inactiveClass="text-foreground/60"
             >
@@ -65,7 +49,7 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
             </A>
             <A
               href="/expenses"
-              class="flex flex-col items-center gap-1 text-sm"
+              class="flex flex-col items-center gap-1 text-xs"
               activeClass="text-foreground font-semibold"
               inactiveClass="text-foreground/60"
             >
@@ -74,7 +58,7 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
             </A>
             <A
               href="/profile"
-              class="flex flex-col items-center gap-1 text-sm"
+              class="flex flex-col items-center gap-1 text-xs"
               activeClass="text-foreground font-semibold"
               inactiveClass="text-foreground/60"
             >
