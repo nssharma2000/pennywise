@@ -2,6 +2,7 @@ import { createForm } from "@tanstack/solid-form";
 import { Show, type Component } from "solid-js";
 import { profileSchema, type ProfileFormData } from "~/lib/validations";
 import type { ProfileType } from "~/types";
+import UIButton from "../ui/Button";
 
 interface ProfileFormProps {
   profile?: ProfileType;
@@ -45,7 +46,7 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
               onInput={(e) => field().handleChange(e.target.value)}
               onBlur={() => field().handleBlur()}
               placeholder="e.g., Chase Credit Card"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -73,7 +74,7 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
               onInput={(e) =>
                 field().handleChange(parseFloat(e.target.value) || 0)
               }
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -86,24 +87,24 @@ const ProfileForm: Component<ProfileFormProps> = (props) => {
 
       {/* Actions */}
       <div class="flex gap-3 pt-4">
-        <button
+        <UIButton
           type="button"
           onClick={props.onCancel}
-          class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
+          class="w-full items-center justify-center bg-slate-500!"
         >
           Cancel
-        </button>
-        <button
+        </UIButton>
+        <UIButton
           type="submit"
           disabled={form.state.isSubmitting}
-          class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          class="disabled:opacity-50 disabled:cursor-not-allowed w-full items-center justify-center"
         >
           {form.state.isSubmitting
             ? "Saving..."
             : props.profile
               ? "Update"
               : "Create"}
-        </button>
+        </UIButton>
       </div>
     </form>
   );

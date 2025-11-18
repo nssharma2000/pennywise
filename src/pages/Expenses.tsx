@@ -1,7 +1,9 @@
 import { CreditCard, Plus } from "lucide-solid";
 import { type Component, For, Show, createSignal } from "solid-js";
+import EmptyState from "~/components/EmptyState";
 import ExpenseCard from "~/components/ExpenseCard";
 import ExpenseForm from "~/components/forms/ExpenseForm";
+import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
 import { useExpenses } from "~/hooks/useExpenses";
@@ -49,39 +51,31 @@ const Expenses: Component = () => {
       {/* Header */}
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Expenses</h2>
-        <button
-          onClick={() => setIsAddingExpense(true)}
-          class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus size={20} />
+        <UIButton onClick={() => setIsAddingExpense(true)} class="">
+          <Plus size={18} />
           Add Expense
-        </button>
+        </UIButton>
       </div>
 
       {/* Loading State */}
       <Show when={loading()}>
-        <div class="flex justify-center text-blue-500 items-center py-8">
+        <div class="flex justify-center text-purple-500 items-center py-8">
           <Loader size={42} />
         </div>
       </Show>
 
       {/* Empty State */}
       <Show when={!loading() && expenses()?.length === 0}>
-        <div class="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <CreditCard size={48} class="mx-auto text-gray-400 mb-4" />
-          <h3 class="text-lg font-semibold text-gray-700 mb-2">
-            No expenses yet
-          </h3>
-          <p class="text-gray-500 mb-4">
-            Get started by adding your first expense
-          </p>
-          <button
-            onClick={() => setIsAddingExpense(true)}
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Add Expense
-          </button>
-        </div>
+        <EmptyState
+          title="No expenses yet"
+          text="Get started by adding your first expense"
+          action={
+            <UIButton onClick={() => setIsAddingExpense(true)} class="">
+              Add Expense
+            </UIButton>
+          }
+          icon={<CreditCard size={48} class="mx-auto text-gray-400" />}
+        />
       </Show>
 
       {/* Expenses List */}

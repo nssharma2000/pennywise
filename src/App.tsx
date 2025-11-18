@@ -5,8 +5,10 @@ import Expenses from "~/pages/Expenses";
 import Profile from "~/pages/Profile";
 import Layout from "~/components/Layout";
 import Toast from "~/components/ui/Toast";
+import { useRecurringGenerator } from "./hooks/useRecurringGenerator";
 
 function App() {
+  useRecurringGenerator();
   return (
     <>
       <Router root={Layout}>

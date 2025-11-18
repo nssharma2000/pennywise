@@ -4,6 +4,7 @@ import { For, Show, type Component } from "solid-js";
 import { expenseSchema, type ExpenseFormData } from "~/lib/validations";
 import { ExpenseCategories, accounts } from "~/pages/Expenses";
 import type { AccountType, ExpenseType } from "~/types";
+import UIButton from "../ui/Button";
 
 interface ExpenseFormProps {
   expense?: ExpenseType;
@@ -55,7 +56,7 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
               onInput={(e) =>
                 field().handleChange(parseFloat(e.target.value) || 0)
               }
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -80,7 +81,7 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
               onInput={(e) => field().handleChange(e.target.value)}
               onBlur={() => field().handleBlur()}
               placeholder="e.g., Amazon: Portable Monitor"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -103,7 +104,7 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
             <select
               value={field().state.value}
               onChange={(e) => field().handleChange(e.target.value)}
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
               <For each={ExpenseCategories}>
                 {(type: (typeof ExpenseCategories)[number]) => (
@@ -132,7 +133,7 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
             <select
               value={field().state.value}
               onChange={(e) => field().handleChange(e.target.value)}
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
               <option value="" disabled selected hidden>
                 Select Account
@@ -174,7 +175,7 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
                 field().handleChange(d);
               }}
               onBlur={() => field().handleBlur()}
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -187,24 +188,24 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
 
       {/* Actions */}
       <div class="flex gap-3 pt-4">
-        <button
+        <UIButton
           type="button"
           onClick={props.onCancel}
-          class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
+          class="w-full items-center justify-center bg-slate-500!"
         >
           Cancel
-        </button>
-        <button
+        </UIButton>
+        <UIButton
           type="submit"
           disabled={form.state.isSubmitting}
-          class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          class="disabled:opacity-50 disabled:cursor-not-allowed w-full items-center justify-center"
         >
           {form.state.isSubmitting
             ? "Saving..."
             : props.expense
               ? "Update"
               : "Create"}
-        </button>
+        </UIButton>
       </div>
     </form>
   );

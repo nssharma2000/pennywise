@@ -3,6 +3,7 @@ import { A } from "@solidjs/router";
 import { Home, CreditCard, Receipt, User } from "lucide-solid";
 import { useServiceWorker } from "~/hooks/useServiceWorker";
 import { useInstallPrompt } from "~/hooks/useInstallPrompt";
+import UIButton from "./ui/Button";
 
 const Layout: Component<{ children?: JSXElement }> = (props) => {
   const { needRefresh, reloadApp, offlineReady } = useServiceWorker();
@@ -14,13 +15,13 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
       <Show when={needRefresh()}>
         <div class="fixed bottom-4 inset-x-0 mx-auto w-fit bg-slate-800 text-white px-4 py-2 rounded-lg shadow-md">
           New version available.{" "}
-          <button class="underline" onClick={reloadApp}>
+          <UIButton class="underline" onClick={reloadApp}>
             Reload
-          </button>
+          </UIButton>
         </div>
       </Show>
       <Show when={offlineReady()}>
-        <div class="fixed bottom-16 inset-x-0 mx-auto w-fit bg-green-600 text-white px-2 py-1 rounded-lg shadow-md z-200 text-xs">
+        <div class="fixed bottom-18 inset-x-0 mx-auto w-fit bg-green-600 text-white px-2 py-1 rounded-lg shadow-md z-200 text-xs opacity-45">
           App ready to work offline
         </div>
       </Show>
@@ -30,12 +31,9 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
           <h1 class="text-lg font-bold">PennyWise</h1>
           <Show when={canInstall()}>
-            <button
-              onClick={promptInstall}
-              class="w-max bg-indigo-600 text-white text-xs rounded-lg py-1 px-4 shadow-sm cursor-pointer"
-            >
+            <UIButton onClick={promptInstall} class="w-max">
               Install PennyWise
-            </button>
+            </UIButton>
           </Show>
         </div>
       </header>

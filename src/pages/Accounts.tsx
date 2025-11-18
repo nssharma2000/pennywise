@@ -5,6 +5,8 @@ import type { AccountType } from "~/types";
 import AccountForm from "~/components/forms/AccountForm";
 import { useProfile } from "~/hooks/useProfiles";
 import Loader from "~/components/ui/Loader";
+import UIButton from "~/components/ui/Button";
+import EmptyState from "~/components/EmptyState";
 
 export const AcountTypes = [
   { value: "credit_card", label: "Credit Card" },
@@ -49,39 +51,31 @@ const Accounts: Component = () => {
       {/* Header */}
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Accounts</h2>
-        <button
-          onClick={() => setIsAddingAccount(true)}
-          class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus size={20} />
+        <UIButton onClick={() => setIsAddingAccount(true)} class="">
+          <Plus size={18} />
           Add Account
-        </button>
+        </UIButton>
       </div>
 
       {/* Loading State */}
       <Show when={loading()}>
-        <div class="flex justify-center text-blue-500 items-center py-8">
+        <div class="flex justify-center text-purple-500 items-center py-8">
           <Loader size={42} />
         </div>
       </Show>
 
       {/* Empty State */}
       <Show when={!loading() && accounts()?.length === 0}>
-        <div class="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <CreditCard size={48} class="mx-auto text-gray-400 mb-4" />
-          <h3 class="text-lg font-semibold text-gray-700 mb-2">
-            No accounts yet
-          </h3>
-          <p class="text-gray-500 mb-4">
-            Get started by adding your first account
-          </p>
-          <button
-            onClick={() => setIsAddingAccount(true)}
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Add Account
-          </button>
-        </div>
+        <EmptyState
+          title="No accounts yet"
+          text="Get started by adding your first account"
+          action={
+            <UIButton onClick={() => setIsAddingAccount(true)} class="">
+              Add Account
+            </UIButton>
+          }
+          icon={<CreditCard size={48} class="mx-auto text-gray-400" />}
+        />
       </Show>
 
       {/* Accounts List */}
@@ -92,7 +86,7 @@ const Accounts: Component = () => {
               {/* Account Header */}
               <div class="flex items-start justify-between mb-3">
                 <div class="flex items-center gap-3">
-                  <div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+                  <div class="p-2 bg-purple-100 rounded-lg text-purple-600">
                     {getAccountIcon(account.type)}
                   </div>
                   <div>
@@ -142,20 +136,20 @@ const Accounts: Component = () => {
 
               {/* Actions */}
               <div class="flex gap-2">
-                <button
+                <UIButton
                   onClick={() => setEditingAccount(account)}
-                  class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm"
+                  class="bg-gray-100! hover:bg-gray-200! text-sm flex-1 text-slate-900!"
                 >
-                  <Pencil size={16} style={{ transform: "translateY(1px)" }} />
+                  <Pencil size={16} />
                   Edit
-                </button>
-                <button
+                </UIButton>
+                <UIButton
                   onClick={() => handleDelete(account.id, account.name)}
-                  class="flex items-center justify-center gap-2 px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors text-sm"
+                  class="bg-red-50! hover:bg-red-100! text-red-600! rounded-lg text-sm"
                 >
-                  <Trash2 size={16} style={{ transform: "translateY(1px)" }} />
+                  <Trash2 size={16} />
                   Delete
-                </button>
+                </UIButton>
               </div>
             </div>
           )}

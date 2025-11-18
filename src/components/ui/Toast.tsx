@@ -25,7 +25,7 @@ const ToastMessage: Component<ToastMessageProps> = (props) => {
   const variantStyles = {
     success: "bg-green-50 border-green-200 text-green-900",
     error: "bg-red-50 border-red-200 text-red-900",
-    info: "bg-blue-50 border-blue-200 text-blue-900",
+    info: "bg-purple-50 border-purple-200 text-purple-900",
     loading: "bg-gray-50 border-gray-200 text-gray-900",
   };
 

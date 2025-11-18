@@ -21,8 +21,8 @@ export class ExpenseTrackerDB extends Dexie {
     this.version(1).stores({
       profile: "id, createdAt",
       accounts: "id, name, type, createdAt",
-      expenses: "id, accountId, date, category, createdAt",
-      incomes: "id, accountId, date, createdAt",
+      expenses: "id, accountId, date, category, createdAt, recurringId",
+      incomes: "id, accountId, date, createdAt, recurringId",
       recurrings: "id, dayOfMonth, type, createdAt",
       transfers: "id, fromAccountId, toAccountId, date, createdAt",
     });

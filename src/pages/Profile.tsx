@@ -1,7 +1,9 @@
 import { format } from "date-fns";
 import { User, UserCircleIcon } from "lucide-solid";
 import { createSignal, Show, type Component } from "solid-js";
+import EmptyState from "~/components/EmptyState";
 import ProfileForm from "~/components/forms/ProfileForm";
+import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import { useProfile } from "~/hooks/useProfiles";
 import type { ProfileType } from "~/types";
@@ -15,38 +17,32 @@ const Profile: Component = () => {
     <div class="flex flex-col gap-6">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Your Profile</h2>
-        <button
-          onClick={() => setIsModifyingProfile(true)}
-          class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <User size={18} />
+        <UIButton onClick={() => setIsModifyingProfile(true)} class="">
+          <User size={16} />
           Modify Profile
-        </button>
+        </UIButton>
       </div>
 
       {/* Loading State */}
       <Show when={loading()}>
-        <div class="flex justify-center text-blue-500 items-center py-8">
+        <div class="flex justify-center text-purple-500 items-center py-8">
           <Loader size={42} />
         </div>
       </Show>
 
       {/* Empty State */}
       <Show when={!loading() && !profile()}>
-        <div class="flex flex-col gap-2 items-center justify-center text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <UserCircleIcon size={48} class="text-gray-400" />
-          <h3 class="text-lg font-semibold text-gray-700">
-            Profile not set yet
-          </h3>
-          <p class="text-gray-500">Get started by adding your details</p>
-          <button
-            onClick={() => setIsModifyingProfile(true)}
-            class="flex gap-4 items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <User size={16} />
-            Modify Profile
-          </button>
-        </div>
+        <EmptyState
+          title="Profile not set yet"
+          text="Get started by adding your details"
+          action={
+            <UIButton onClick={() => setIsModifyingProfile(true)} class="">
+              <User size={16} />
+              Modify Profile
+            </UIButton>
+          }
+          icon={<UserCircleIcon size={48} class="text-gray-400" />}
+        />
       </Show>
       <Show when={!loading() && profile()}>
         <p class="text-gray-200">

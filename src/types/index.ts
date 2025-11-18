@@ -20,7 +20,7 @@ export interface AccountType {
 
 export interface ExpenseType {
   id: string;
-  accountId: string;
+  accountId?: string;
   amount: number;
   category: string;
   description?: string;
@@ -28,6 +28,7 @@ export interface ExpenseType {
   createdAt: Date;
   isEMI?: boolean;
   recurringId?: string | null; // points to Recurring template
+  transferId?: string | null;
 }
 
 export interface IncomeType {
@@ -41,17 +42,24 @@ export interface IncomeType {
   recurringId?: string | null;
 }
 
+export type RecurringKind = "expense" | "income" | "emi";
 export interface RecurringType {
   id: string;
-  // simple monthly rule for v1:
-  dayOfMonth: number; // 1..31 (2 => every month on 2nd)
+  dayOfMonth: number; // 1..31
   amount: number;
   accountId?: string;
   category?: string;
   description?: string;
-  type: "expense" | "income";
+  type: RecurringKind;
+  active?: boolean; // togglable
+  // for EMI specific:
+  totalAmount?: number; // total loan amount
+  installments?: number; // total months
+  installmentsPaid?: number; // months already generated
+  monthlyAmount?: number; // derived or given
+  startDate?: Date; // first due date
   createdAt: Date;
-  lastTriggeredAt?: Date | null;
+  lastTriggeredAt?: Date | null; // optional
 }
 
 export interface TransferType {

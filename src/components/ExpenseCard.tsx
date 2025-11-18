@@ -3,6 +3,7 @@ import { LucideCircleDollarSign, Pencil, Trash2 } from "lucide-solid";
 import { createMemo, createSignal, Show } from "solid-js";
 import { accounts } from "~/pages/Expenses";
 import type { ExpenseType } from "~/types";
+import UIButton from "./ui/Button";
 
 const ExpenseCard = ({
   expense,
@@ -67,20 +68,20 @@ const ExpenseCard = ({
 
         {/* Actions */}
         <div class="flex gap-2">
-          <button
+          <UIButton
             onClick={() => setEditingExpense(expense)}
-            class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm"
+            class="bg-gray-100! hover:bg-gray-200! text-sm flex-1 text-slate-900!"
           >
-            <Pencil size={16} style={{ transform: "translateY(1px)" }} />
+            <Pencil size={16} />
             Edit
-          </button>
-          <button
+          </UIButton>
+          <UIButton
             onClick={() => handleDelete(expense.id)}
-            class="flex items-center justify-center gap-2 px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors text-sm"
+            class="bg-red-50! hover:bg-red-100! text-red-600!"
           >
-            <Trash2 size={16} style={{ transform: "translateY(1px)" }} />
+            <Trash2 size={16} />
             Delete
-          </button>
+          </UIButton>
         </div>
       </Show>
     </div>
