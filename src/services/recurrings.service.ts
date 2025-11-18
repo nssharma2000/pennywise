@@ -1,7 +1,7 @@
 // src/services/recurrings.service.ts
-import { db } from "~/db/schema";
+import { endOfMonth, setDate, startOfMonth } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
-import { startOfMonth, endOfMonth, setDate, isSameMonth } from "date-fns";
+import { db } from "~/db/schema";
 import type { RecurringType } from "~/types";
 
 function clampDayToMonth(day: number, date: Date) {
