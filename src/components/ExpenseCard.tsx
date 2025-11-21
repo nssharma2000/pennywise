@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { LucideCircleDollarSign, Pencil, Trash2 } from "lucide-solid";
+import { IndianRupee, Pencil, Trash2 } from "lucide-solid";
 import { createMemo, createSignal, Show } from "solid-js";
 import { accounts } from "~/pages/Expenses";
 import type { ExpenseType } from "~/types";
@@ -18,7 +18,7 @@ const ExpenseCard = ({
 }) => {
   const [isExpanded, setIsExpanded] = createSignal(false);
   const account = createMemo(() =>
-    accounts()?.find((acc) => acc.id === expense.accountId),
+    accounts()?.find((acc) => acc.id === expense.accountId)
   );
 
   return (
@@ -30,7 +30,7 @@ const ExpenseCard = ({
       >
         <div class="flex items-center gap-3 w-full">
           <div class="p-2 bg-red-200 rounded-lg text-orange-600">
-            <LucideCircleDollarSign />
+            <IndianRupee />
           </div>
           <div>
             <h3 class="font-semibold text-lg">

@@ -1,3 +1,6 @@
+// Indexed DB does not support booleans
+export type BooleanType = 0 | 1;
+
 export interface ProfileType {
   id: string;
   monthlyIncome: number;
@@ -13,8 +16,8 @@ export interface AccountType {
   type: "credit_card" | "debit_card" | "bank_account";
   balance?: number;
   creditLimit?: number;
-  billingCycleStart?: number | null; // day of month
-  billingCycleEnd?: number | null;
+  billingCycleStart?: number; // day of month
+  billingCycleEnd?: number;
   createdAt: Date;
 }
 
@@ -25,10 +28,10 @@ export interface ExpenseType {
   category: string;
   description?: string;
   date: Date;
+  isEMI?: BooleanType; //Boolean
+  recurringId?: string; // points to Recurring template
+  transferId?: string;
   createdAt: Date;
-  isEMI?: boolean;
-  recurringId?: string | null; // points to Recurring template
-  transferId?: string | null;
 }
 
 export interface IncomeType {
@@ -38,8 +41,8 @@ export interface IncomeType {
   category?: string;
   description?: string;
   date: Date;
+  recurringId?: string;
   createdAt: Date;
-  recurringId?: string | null;
 }
 
 export type RecurringKind = "expense" | "income" | "emi";
@@ -47,19 +50,19 @@ export interface RecurringType {
   id: string;
   dayOfMonth: number; // 1..31
   amount: number;
-  accountId?: string;
-  category?: string;
-  description?: string;
+  accountId: string;
+  description: string;
   type: RecurringKind;
-  active?: boolean; // togglable
+  isActive: BooleanType; //Boolean // togglable
+  category?: string;
   // for EMI specific:
   totalAmount?: number; // total loan amount
   installments?: number; // total months
   installmentsPaid?: number; // months already generated
   monthlyAmount?: number; // derived or given
   startDate?: Date; // first due date
+  lastTriggeredAt?: Date; // optional
   createdAt: Date;
-  lastTriggeredAt?: Date | null; // optional
 }
 
 export interface TransferType {

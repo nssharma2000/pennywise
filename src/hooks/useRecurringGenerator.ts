@@ -1,6 +1,6 @@
 // src/hooks/useRecurringGenerator.ts
-import { onMount, onCleanup } from "solid-js";
-import { generateRecurrencesForMonth } from "~/services/recurrings.service";
+import { onCleanup, onMount } from "solid-js";
+// import { generateRecurrencesForMonth } from "~/services/recurrings.service";
 /**
  * Call this once in the root component to ensure monthly occurrences are created.
  */
@@ -8,7 +8,7 @@ export function useRecurringGenerator() {
   async function generateNow() {
     try {
       // generate for current month
-      await generateRecurrencesForMonth(new Date());
+      // await generateRecurrencesForMonth(new Date());
       // Optional: generate for previous month if you want to backfill
       // await generateRecurrencesForMonth(subMonths(new Date(), 1));
     } catch (err) {
@@ -26,7 +26,7 @@ export function useRecurringGenerator() {
     };
     document.addEventListener("visibilitychange", onVisibility);
     onCleanup(() =>
-      document.removeEventListener("visibilitychange", onVisibility),
+      document.removeEventListener("visibilitychange", onVisibility)
     );
   });
 }

@@ -1,15 +1,15 @@
-import { Router, Route } from "@solidjs/router";
-import Dashboard from "~/pages/Dashboard";
-import Accounts from "~/pages/Accounts";
-import Expenses from "~/pages/Expenses";
-import Profile from "~/pages/Profile";
+import { Route, Router } from "@solidjs/router";
 import Layout from "~/components/Layout";
 import Toast from "~/components/ui/Toast";
-import { useRecurringGenerator } from "./hooks/useRecurringGenerator";
+import Accounts from "~/pages/Accounts";
+import Dashboard from "~/pages/Dashboard";
+import Expenses from "~/pages/Expenses";
+import Profile from "~/pages/Profile";
 import LandingPage from "./pages/LandingPage";
+import Recurrings from "./pages/Recurrings";
 
 function App() {
-  useRecurringGenerator();
+  // useRecurringGenerator();
   return (
     <>
       <Router root={Layout}>
@@ -17,6 +17,7 @@ function App() {
         <Route path="/accounts" component={Accounts} />
         <Route path="/expenses" component={Expenses} />
         <Route path="/profile" component={Profile} />
+        <Route path="/recurrings" component={Recurrings} />
         <Route path="*404" component={LandingPage} />
       </Router>
       <Toast />

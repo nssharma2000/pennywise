@@ -1,7 +1,7 @@
 import { createForm } from "@tanstack/solid-form";
 import { For, Show, createMemo, type Component } from "solid-js";
 import { accountSchema, type AccountFormData } from "~/lib/validations";
-import { AcountTypes } from "~/pages/Accounts";
+import { AccountTypes } from "~/pages/Accounts";
 import type { AccountType } from "~/types";
 import UIButton from "../ui/Button";
 
@@ -83,8 +83,8 @@ const AccountForm: Component<AccountFormProps> = (props) => {
               }
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             >
-              <For each={AcountTypes}>
-                {(type: (typeof AcountTypes)[number]) => (
+              <For each={AccountTypes}>
+                {(type: (typeof AccountTypes)[number]) => (
                   <option value={type.value}>{type.label}</option>
                 )}
               </For>
@@ -196,8 +196,8 @@ const AccountForm: Component<AccountFormProps> = (props) => {
           {form.state.isSubmitting
             ? "Saving..."
             : props.account
-              ? "Update"
-              : "Create"}
+            ? "Update"
+            : "Create"}
         </UIButton>
       </div>
     </form>

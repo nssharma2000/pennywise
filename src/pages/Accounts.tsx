@@ -1,14 +1,14 @@
-import { type Component, Show, For, createSignal } from "solid-js";
-import { useAccounts } from "~/hooks/useAccounts";
-import { Plus, CreditCard, Trash2, Pencil, PiggyBank } from "lucide-solid";
-import type { AccountType } from "~/types";
-import AccountForm from "~/components/forms/AccountForm";
-import { useProfile } from "~/hooks/useProfiles";
-import Loader from "~/components/ui/Loader";
-import UIButton from "~/components/ui/Button";
+import { CreditCard, Pencil, PiggyBank, Plus, Trash2 } from "lucide-solid";
+import { type Component, For, Show, createSignal } from "solid-js";
 import EmptyState from "~/components/EmptyState";
+import AccountForm from "~/components/forms/AccountForm";
+import UIButton from "~/components/ui/Button";
+import Loader from "~/components/ui/Loader";
+import { useAccounts } from "~/hooks/useAccounts";
+import { useProfile } from "~/hooks/useProfiles";
+import type { AccountType } from "~/types";
 
-export const AcountTypes = [
+export const AccountTypes = [
   { value: "credit_card", label: "Credit Card" },
   { value: "debit_card", label: "Debit Card" },
   { value: "bank_account", label: "Bank Account" },
@@ -29,7 +29,7 @@ const Accounts: Component = () => {
 
   const [isAddingAccount, setIsAddingAccount] = createSignal(false);
   const [editingAccount, setEditingAccount] = createSignal<AccountType | null>(
-    null,
+    null
   );
 
   const getAccountIcon = (type: AccountType["type"]) => {

@@ -19,12 +19,17 @@ export const expenseService = {
   // Get expenses in date range
   getByDateRange: async (
     startDate: Date,
-    endDate: Date,
+    endDate: Date
   ): Promise<ExpenseType[]> => {
     return await db.expenses
       .where("date")
       .between(startDate, endDate, true, true)
       .toArray();
+  },
+
+  // Get expenses by recurring
+  getByRecurring: async (recurringId: string): Promise<ExpenseType[]> => {
+    return await db.expenses.where("recurringId").equals(recurringId).toArray();
   },
 
   // Get expenses by category
@@ -34,7 +39,7 @@ export const expenseService = {
 
   getByCategoryAndAccount: async (
     category: string,
-    accountId: string,
+    accountId: string
   ): Promise<ExpenseType[]> => {
     return await db.expenses
       .where("category")
@@ -47,21 +52,21 @@ export const expenseService = {
     category: string,
     accountId: string,
     startDate: Date,
-    endDate: Date,
+    endDate: Date
   ): Promise<ExpenseType[]> => {
     return await db.expenses
       .where("date")
       .between(startDate, endDate, true, true)
       .and(
         (expense) =>
-          expense.accountId === accountId && expense.category === category,
+          expense.accountId === accountId && expense.category === category
       )
       .toArray();
   },
 
   // Create expense
   create: async (
-    data: Omit<ExpenseType, "id" | "createdAt">,
+    data: Omit<ExpenseType, "id" | "createdAt">
   ): Promise<string> => {
     const expense: ExpenseType = {
       id: crypto.randomUUID(),
@@ -95,7 +100,7 @@ export const expenseService = {
 
   // Bulk create
   createMany: async (
-    expenses: Omit<ExpenseType, "id" | "createdAt">[],
+    expenses: Omit<ExpenseType, "id" | "createdAt">[]
   ): Promise<void> => {
     const expensesWithIds = expenses.map((exp) => ({
       id: crypto.randomUUID(),

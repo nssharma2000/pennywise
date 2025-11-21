@@ -26,11 +26,6 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
     },
   }));
 
-  // Create a reactive memo for the account type
-  form.useStore((state) => {
-    console.log("State :>>", state);
-  });
-
   return (
     <form
       onSubmit={(e) => {
@@ -203,8 +198,8 @@ const ExpenseForm: Component<ExpenseFormProps> = (props) => {
           {form.state.isSubmitting
             ? "Saving..."
             : props.expense
-              ? "Update"
-              : "Create"}
+            ? "Update"
+            : "Create"}
         </UIButton>
       </div>
     </form>

@@ -26,36 +26,73 @@ export type ProfileFormData = z.infer<typeof profileSchema>;
 export type AccountFormData = z.infer<typeof accountSchema>;
 export type ExpenseFormData = z.infer<typeof expenseSchema>;
 
-export const baseRecurring = z.object({
-  dayOfMonth: z.number().min(1).max(31),
-  amount: z.number().positive(),
-  accountId: z.string().optional(),
-  category: z.string().optional(),
-  description: z.string().optional(),
-});
-
-export const recurringCreateSchema = baseRecurring
-  .extend({
+export const recurringCreateSchema = z
+  .object({
+    dayOfMonth: z.number().min(1).max(31),
+    amount: z.number().positive(),
+    accountId: z.string().min(1, "Account is required"),
+    description: z.string(),
+    category: z.string().optional(),
     type: z.enum(["expense", "income", "emi"]),
     // EMI fields (optional but required if type === 'emi')
     totalAmount: z.number().positive().optional(),
+    monthlyAmount: z.number().positive().optional(),
     installments: z.number().int().positive().optional(),
-    startDate: z.preprocess(
-      (val) => (val ? new Date(val as string) : undefined),
-      z.date().optional(),
-    ),
+    installmentsPaid: z.number().int().min(0).optional(),
+    startDate: z.coerce.date<Date>().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.type === "emi") {
-      if (!data.totalAmount)
+      if (!data.totalAmount || data.totalAmount <= 0)
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "EMI requires totalAmount",
+          code: "custom",
+          message: "EMI requires Total Amount",
+          path: ["totalAmount"],
+        });
+      if (!data.monthlyAmount || data.monthlyAmount <= 0)
+        ctx.addIssue({
+          code: "custom",
+          message: "EMI requires Monthly Amount",
+          path: ["monthlyAmount"],
+        });
+      if (
+        data.monthlyAmount &&
+        data.totalAmount &&
+        data.monthlyAmount > data.totalAmount
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "EMI Monthly Amount can not be greater than Total Amount",
+          path: ["monthlyAmount"],
+        });
+      if (data.monthlyAmount && data.monthlyAmount !== data.amount)
+        ctx.addIssue({
+          code: "custom",
+          message: "EMI Monthly Amount should be equal to Amount",
+          path: ["amount"],
         });
       if (!data.installments)
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "EMI requires installments",
+          code: "custom",
+          message: "EMI requires Installments",
+          path: ["installments"],
+        });
+      if (data.installmentsPaid === undefined)
+        ctx.addIssue({
+          code: "custom",
+          message: "EMI requires Paid Installments count",
+          path: ["installmentsPaid"],
+        });
+      if (
+        data.installmentsPaid &&
+        data.installments &&
+        data.installmentsPaid > data.installments
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            "EMI Paid Installments can not be greater than Total Installments",
+          path: ["installmentsPaid"],
         });
     }
   });

@@ -1,22 +1,22 @@
 import { A } from "@solidjs/router";
-import { ChartArea, CreditCard, Receipt, User } from "lucide-solid";
+import { ChartArea, CreditCard, Receipt, Repeat } from "lucide-solid";
 import { type Component, type JSXElement } from "solid-js";
 
 const Layout: Component<{ children?: JSXElement }> = (props) => {
   return (
     <div class="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header class="sticky top-0 z-10 bg-background border-b border-border w-screen">
+      {/* <header class="sticky top-0 z-10 bg-background border-b border-border w-screen">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
           <h1 class="text-lg font-bold">PennyWise</h1>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content */}
-      <main class="container mx-auto px-4 py-6">{props.children}</main>
+      <main class="container mx-auto px-4 py-6 w-screen">{props.children}</main>
 
       {/* Bottom Navigation */}
-      <nav class="fixed bottom-0 left-0 right-0 bg-background border-t border-border">
+      <nav class="fixed bottom-0 left-0 right-0 bg-background border-t border-border bg-background z-50">
         <div class="container mx-auto px-4">
           <div class="flex justify-around py-3">
             <A
@@ -47,13 +47,13 @@ const Layout: Component<{ children?: JSXElement }> = (props) => {
               <span>Expenses</span>
             </A>
             <A
-              href="/profile"
+              href="/recurrings"
               class="flex flex-col items-center gap-1 text-xs"
               activeClass="text-foreground font-semibold"
               inactiveClass="text-foreground/60"
             >
-              <User size={24} />
-              <span>Profile</span>
+              <Repeat size={24} />
+              <span>Recurrings</span>
             </A>
           </div>
         </div>

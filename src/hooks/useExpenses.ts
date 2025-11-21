@@ -1,9 +1,8 @@
 import { createResource, createSignal } from "solid-js";
-import { expenseService } from "~/services/expenses.service";
 import { toast } from "~/components/ui/Toast";
+import { checkString } from "~/lib/utils";
+import { expenseService } from "~/services/expenses.service";
 import type { ExpenseType } from "~/types";
-
-const checkString = (val?: string) => !!(val && val.trim().length > 0);
 
 const fetchExpenses = async (filters: {
   category: string;
@@ -21,13 +20,13 @@ const fetchExpenses = async (filters: {
         category,
         accountID,
         new Date(dateRange.start),
-        new Date(dateRange.end),
+        new Date(dateRange.end)
       );
     }
     if (checkString(dateRange.start) || checkString(dateRange.end)) {
       return await expenseService.getByDateRange(
         new Date(dateRange.start),
-        new Date(dateRange.end),
+        new Date(dateRange.end)
       );
     }
     if (checkString(category) && checkString(accountID)) {
