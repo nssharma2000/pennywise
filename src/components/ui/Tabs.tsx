@@ -1,14 +1,14 @@
 import { Tabs } from "@kobalte/core/tabs";
-import { For, type Accessor, type JSXElement, type Setter } from "solid-js";
+import { For, type Accessor, type JSXElement } from "solid-js";
 
 function UITabs<T extends string>({
   tabs,
   currentTab,
   setCurrentTab,
 }: {
-  tabs: { label: JSXElement; value: T; content: JSXElement }[];
+  tabs: { label: JSXElement; value: T; content?: JSXElement }[];
   currentTab?: Accessor<T>;
-  setCurrentTab?: Setter<T>;
+  setCurrentTab?: (v: T) => void;
 }) {
   return (
     <>
@@ -16,7 +16,7 @@ function UITabs<T extends string>({
         aria-label="Tabs"
         class="tabs w-full"
         value={currentTab!()}
-        onChange={setCurrentTab}
+        onChange={(v) => setCurrentTab!(v as T)}
       >
         <Tabs.List class="tabs__list relative flex items-center border-b border-b-slate-300">
           <For each={tabs}>

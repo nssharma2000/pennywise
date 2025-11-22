@@ -1,4 +1,4 @@
-import { createResource } from "solid-js";
+import { createMemo, createResource, createSignal } from "solid-js";
 import type { ExpenseType, IncomeType } from "~/types";
 import { useExpenses } from "./useExpenses";
 import { useIncomes } from "./useIncomes";
@@ -9,11 +9,21 @@ export type TransactionEntity = ExpenseType | IncomeType;
 export type TransactionType = TransactionEntity & {
   transactionKind: TransactionKind;
 };
+// TODO: Labels
+export const TRANSACTION_TABS: {
+  label: string;
+  value: TransactionKind | "all";
+}[] = [
+  { label: "All", value: "all" },
+  { label: "Expenses", value: "expense" },
+  { label: "Incomes", value: "income" },
+];
 
 export const useTransactions = () => {
   const {
     expenses,
     loading: expensesLoading,
+    refresh: expensesRefresh,
     filter: expenseFilter,
     filterByDateRange: expenseFilterByDateRange,
     filters: expenseFilters,
@@ -24,6 +34,7 @@ export const useTransactions = () => {
   const {
     incomes,
     loading: incomesLoading,
+    refresh: incomesRefresh,
     filter: incomeFilter,
     filterByDateRange: incomeFilterByDateRange,
     filters: incomeFilters,
@@ -31,22 +42,28 @@ export const useTransactions = () => {
     update: updateIncome,
     delete: deleteIncome,
   } = useIncomes();
-  const fetchTransactions = async () => {
-    const exp = expenses() ?? [];
-    const inc = incomes() ?? [];
 
-    // Normalize: tag each with transactionKind
-    const taggedExp = exp.map((e) => ({
+  const [currentTab, setCurrentTab] = createSignal<
+    (typeof TRANSACTION_TABS)[number]["value"]
+  >(TRANSACTION_TABS[0].value);
+
+  // Normalize: tag each with transactionKind
+  const transactionExpenses = createMemo(() =>
+    (expenses() || []).map((e) => ({
       ...e,
       transactionKind: "expense" as const,
-    }));
-    const taggedInc = inc.map((i) => ({
-      ...i,
+    }))
+  );
+  const transactionIncomes = createMemo(() =>
+    (incomes() || []).map((e) => ({
+      ...e,
       transactionKind: "income" as const,
-    }));
+    }))
+  );
 
+  const fetchTransactions = async () => {
     // Merge & sort by date (latest first)
-    const combined = [...taggedExp, ...taggedInc].sort(
+    const combined = [...transactionExpenses(), ...transactionIncomes()].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
@@ -65,6 +82,15 @@ export const useTransactions = () => {
   const filterByDateRange = (start: string, end: string) => {
     expenseFilterByDateRange(start, end);
     incomeFilterByDateRange(start, end);
+  };
+
+  const refresh = () => {
+    refetch();
+    expensesRefresh();
+    incomesRefresh();
+  };
+  const changeTab = (v: (typeof TRANSACTION_TABS)[number]["value"]) => {
+    setCurrentTab(v);
   };
 
   const create = async (
@@ -90,17 +116,24 @@ export const useTransactions = () => {
   };
 
   return {
-    transactions,
+    transactions: () =>
+      currentTab() === "expense"
+        ? transactionExpenses()
+        : currentTab() === "income"
+        ? transactionIncomes()
+        : transactions(),
     expenses,
     incomes,
     loading: () => !!(expensesLoading() && incomesLoading()),
     error: () => transactions.error,
-    refresh: refetch,
+    refresh,
     filter,
     filters: { expense: expenseFilters, income: incomeFilters },
     filterByDateRange,
     create,
     update,
     delete: deleteTransaction,
+    changeTab,
+    currentTab,
   };
 };

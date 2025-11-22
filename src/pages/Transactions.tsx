@@ -6,9 +6,11 @@ import IncomeCard from "~/components/IncomeCard";
 import TransactionForm from "~/components/TransactionForm";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
+import UITabs from "~/components/ui/Tabs";
 import { useAccounts } from "~/hooks/useAccounts";
 import { useProfile } from "~/hooks/useProfiles";
 import {
+  TRANSACTION_TABS,
   useTransactions,
   type TransactionEntity,
   type TransactionKind,
@@ -35,6 +37,8 @@ const Transactions: Component = () => {
     loading,
     create,
     update,
+    changeTab,
+    currentTab,
     delete: deleteTransaction,
   } = useTransactions();
   const { profile } = useProfile();
@@ -56,6 +60,11 @@ const Transactions: Component = () => {
           Add Transaction
         </UIButton>
       </div>
+      <UITabs
+        tabs={TRANSACTION_TABS}
+        currentTab={currentTab}
+        setCurrentTab={changeTab}
+      />
 
       {/* Loading State */}
       <Show when={loading()}>
