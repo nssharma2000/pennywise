@@ -1,5 +1,13 @@
+import { endOfMonth, startOfMonth } from "date-fns";
 import { db } from "~/db/schema";
-import type { BooleanType, RecurringKind, RecurringType } from "~/types";
+import { clampDayToMonth } from "~/lib/utils";
+import type {
+  BooleanType,
+  ExpenseType,
+  IncomeType,
+  RecurringKind,
+  RecurringType,
+} from "~/types";
 
 export const recurringService = {
   // Get all recurrings
@@ -97,5 +105,101 @@ export const recurringService = {
       .equals("income")
       .toArray();
     return recurrings.reduce((sum, exp) => sum + exp.amount, 0);
+  },
+
+  generateRecurringTransactions: async (now: Date) => {
+    const stats = { incomes: 0, emis: 0, expenses: 0 };
+    const recurrings = await db.recurrings
+      .where("isActive")
+      .equals(1)
+      .toArray();
+
+    // month bounds
+    const monthStart = startOfMonth(now);
+    const monthEnd = endOfMonth(now);
+
+    for (const r of recurrings) {
+      // if the recurring has a startDate and it's in future, skip
+      if (r.startDate && r.startDate > monthEnd) continue;
+
+      // if EMI and finished, skip
+      if (
+        r.type === "emi" &&
+        r.installments &&
+        (r.installmentsPaid ?? 0) >= r.installments
+      ) {
+        continue;
+      }
+
+      const occurrenceDate = clampDayToMonth(r.dayOfMonth, monthStart);
+
+      // check if there is already an expense/income for this recurringId in this month
+      const exists = await db
+        .table(r.type === "income" ? "incomes" : "expenses")
+        .where("recurringId")
+        .equals(r.id)
+        .and((item: ExpenseType | IncomeType) => {
+          const d = new Date(item.date);
+          return (
+            d.getFullYear() === occurrenceDate.getFullYear() &&
+            d.getMonth() === occurrenceDate.getMonth()
+          );
+        })
+        .count();
+
+      if (exists > 0) {
+        // already generated this month
+        continue;
+      }
+
+      // create occurrence
+      if (r.type === "income") {
+        stats.incomes += 1;
+        await db.incomes.add({
+          id: crypto.randomUUID(),
+          accountId: r.accountId,
+          amount: r.amount,
+          category: r.category ?? "Recurring Income",
+          description: r.description,
+          date: occurrenceDate,
+          createdAt: new Date(),
+          recurringId: r.id,
+        });
+      } else {
+        // expense or emi
+        const isEMI = r.type === "emi";
+        if (isEMI) stats.emis += 1;
+        else stats.expenses += 1;
+        await db.expenses.add({
+          id: crypto.randomUUID(),
+          accountId: r.accountId,
+          amount: r.amount,
+          category: r.category ?? (isEMI ? "EMI" : "Recurring Expense"),
+          description: r.description,
+          date: occurrenceDate,
+          createdAt: new Date(),
+          recurringId: r.id,
+          isEMI: isEMI ? 1 : 0,
+        });
+
+        // if EMI: increment installmentsPaid and possibly deactivate
+        if (r.type === "emi" && r.installments) {
+          const updatedPaid = (r.installmentsPaid ?? 0) + 1;
+          const update: Partial<RecurringType> = {
+            installmentsPaid: updatedPaid,
+          };
+
+          if (updatedPaid >= r.installments) {
+            update.isActive = 0;
+          }
+          update.lastTriggeredAt = new Date();
+          await db.recurrings.update(r.id, update);
+        } else {
+          // update lastTriggeredAt for non-emi
+          await db.recurrings.update(r.id, { lastTriggeredAt: new Date() });
+        }
+      }
+    }
+    return stats;
   },
 };

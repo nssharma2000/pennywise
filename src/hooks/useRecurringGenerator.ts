@@ -1,16 +1,19 @@
 // src/hooks/useRecurringGenerator.ts
 import { onCleanup, onMount } from "solid-js";
-// import { generateRecurrencesForMonth } from "~/services/recurrings.service";
+import { recurringService } from "~/services/recurrings.service";
+
 /**
  * Call this once in the root component to ensure monthly occurrences are created.
  */
 export function useRecurringGenerator() {
   async function generateNow() {
     try {
+      console.log("Generating Recurring Transactions Now!!!");
       // generate for current month
-      // await generateRecurrencesForMonth(new Date());
-      // Optional: generate for previous month if you want to backfill
-      // await generateRecurrencesForMonth(subMonths(new Date(), 1));
+      const stats = await recurringService.generateRecurringTransactions(
+        new Date()
+      );
+      console.log("Successfully Generated Recurring Transactions!!!", stats);
     } catch (err) {
       console.error("Error generating recurrings:", err);
     }

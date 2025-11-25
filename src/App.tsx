@@ -5,11 +5,12 @@ import Accounts from "~/pages/Accounts";
 import Dashboard from "~/pages/Dashboard";
 import Profile from "~/pages/Profile";
 import Transactions from "~/pages/Transactions";
+import { useRecurringGenerator } from "./hooks/useRecurringGenerator";
 import LandingPage from "./pages/LandingPage";
 import Recurrings from "./pages/Recurrings";
 
 function App() {
-  // useRecurringGenerator();
+  useRecurringGenerator();
   return (
     <>
       <Router root={Layout}>

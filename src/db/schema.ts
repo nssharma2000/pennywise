@@ -23,7 +23,7 @@ export class ExpenseTrackerDB extends Dexie {
       accounts: "id, name, type, createdAt",
       expenses: "id, accountId, date, category, createdAt, recurringId",
       incomes: "id, accountId, date, createdAt, recurringId",
-      recurrings: "id, dayOfMonth, type, createdAt",
+      recurrings: "id, dayOfMonth, type, createdAt, isActive",
       transfers: "id, fromAccountId, toAccountId, date, createdAt",
     });
   }
