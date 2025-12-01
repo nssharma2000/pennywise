@@ -1,3 +1,4 @@
+import { SettingsIcon } from "lucide-solid";
 import {
   createMemo,
   For,
@@ -5,6 +6,7 @@ import {
   type Component,
   type JSXElement,
 } from "solid-js";
+import MenuButton from "~/components/FloatingButtons/MenuButton";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
 import { useExpenses } from "~/hooks/useExpenses";
@@ -14,7 +16,7 @@ const renderDashboardCard = (
   val: string | number | undefined | null,
   out: string | number | undefined | null,
   isLoading: boolean,
-  fallback?: JSXElement,
+  fallback?: JSXElement
 ) =>
   isLoading ? (
     <span class="text-gray-500">
@@ -36,7 +38,7 @@ const Dashboard: Component = () => {
   const totalExpenses = createMemo(() =>
     expenses()
       ?.reduce((sum, exp) => sum + exp.amount, 0)
-      .toString(),
+      .toString()
   );
   const expensesByAccount = createMemo(() =>
     accounts()?.map((account) => ({
@@ -44,11 +46,15 @@ const Dashboard: Component = () => {
       total: expenses()
         ?.filter((exp) => exp.accountId === account.id)
         .reduce((sum, exp) => sum + exp.amount, 0),
-    })),
+    }))
   );
 
   return (
     <div class="flex flex-col gap-6 text-xl">
+      <MenuButton
+        position="bottom-right"
+        items={[{ label: "Settings", icon: SettingsIcon, onClick() {} }]}
+      />
       <p class="flex gap-4 items-end">
         Total Expenses:{" "}
         <span class="font-bold text-base">
@@ -56,7 +62,7 @@ const Dashboard: Component = () => {
             totalExpenses(),
             `${currency} ${totalExpenses()}`,
             expensesLoading(),
-            "0",
+            "0"
           )}
         </span>
       </p>
@@ -68,7 +74,7 @@ const Dashboard: Component = () => {
             profile()?.monthlyIncome,
             `${currency} ${profile()?.monthlyIncome}`,
             profileLoading(),
-            "No Income",
+            "No Income"
           )}
         </span>
       </p>
@@ -80,7 +86,7 @@ const Dashboard: Component = () => {
             accounts()?.length,
             `${accounts()?.length}`,
             accountsLoading(),
-            "No Accounts",
+            "No Accounts"
           )}
         </span>
       </p>

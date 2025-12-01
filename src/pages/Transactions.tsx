@@ -1,7 +1,14 @@
-import { CreditCard, Plus } from "lucide-solid";
+import {
+  CreditCard,
+  FilterIcon,
+  SettingsIcon,
+  SortAscIcon,
+} from "lucide-solid";
 import { For, Show, createSignal, type Component } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import ExpenseCard from "~/components/ExpenseCard";
+import AddButton from "~/components/FloatingButtons/AddButton";
+import MenuButton from "~/components/FloatingButtons/MenuButton";
 import IncomeCard from "~/components/IncomeCard";
 import TransactionForm from "~/components/TransactionForm";
 import TransferCard from "~/components/TransferCard";
@@ -55,13 +62,18 @@ const Transactions: Component = () => {
 
   return (
     <div class="space-y-4">
+      <MenuButton
+        position="bottom-right"
+        items={[
+          { label: "Settings", icon: SettingsIcon, onClick() {} },
+          { label: "Sort", icon: SortAscIcon, onClick() {} },
+          { label: "Filter", icon: FilterIcon, onClick() {} },
+        ]}
+      />
+      <AddButton handleClick={() => setIsAddingTransaction(true)} />
       {/* Header */}
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Transactions</h2>
-        <UIButton onClick={() => setIsAddingTransaction(true)} class="">
-          <Plus size={18} />
-          Add Transaction
-        </UIButton>
       </div>
       <UITabs
         tabs={TRANSACTION_TABS}

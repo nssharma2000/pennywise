@@ -1,7 +1,14 @@
-import { CreditCard, Plus } from "lucide-solid";
+import {
+  CreditCard,
+  FilterIcon,
+  SettingsIcon,
+  SortAscIcon,
+} from "lucide-solid";
 import { type Component, For, Show, createSignal } from "solid-js";
 import AccountCard from "~/components/AccountCard";
 import EmptyState from "~/components/EmptyState";
+import AddButton from "~/components/FloatingButtons/AddButton";
+import MenuButton from "~/components/FloatingButtons/MenuButton";
 import AccountForm from "~/components/forms/AccountForm";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
@@ -41,13 +48,18 @@ const Accounts: Component = () => {
 
   return (
     <div class="space-y-4">
+      <MenuButton
+        position="bottom-right"
+        items={[
+          { label: "Settings", icon: SettingsIcon, onClick() {} },
+          { label: "Sort", icon: SortAscIcon, onClick() {} },
+          { label: "Filter", icon: FilterIcon, onClick() {} },
+        ]}
+      />
+      <AddButton handleClick={() => setIsAddingAccount(true)} />
       {/* Header */}
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Accounts</h2>
-        <UIButton onClick={() => setIsAddingAccount(true)} class="">
-          <Plus size={18} />
-          Add Account
-        </UIButton>
       </div>
 
       {/* Loading State */}

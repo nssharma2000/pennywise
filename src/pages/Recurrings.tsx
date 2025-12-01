@@ -1,6 +1,8 @@
-import { CreditCard, Plus } from "lucide-solid";
+import { CreditCard, SettingsIcon } from "lucide-solid";
 import { type Component, For, Show, createSignal } from "solid-js";
 import EmptyState from "~/components/EmptyState";
+import AddButton from "~/components/FloatingButtons/AddButton";
+import MenuButton from "~/components/FloatingButtons/MenuButton";
 import RecurringForm from "~/components/forms/RecurringForm";
 import RecurringCard from "~/components/RecurringCard";
 import UIButton from "~/components/ui/Button";
@@ -51,13 +53,14 @@ const Recurrings: Component = () => {
 
   return (
     <div class="space-y-4">
+      <MenuButton
+        position="bottom-right"
+        items={[{ label: "Settings", icon: SettingsIcon, onClick() {} }]}
+      />
+      <AddButton handleClick={() => setIsAddingRecurring(true)} />
       {/* Header */}
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">Recurring Transactions</h2>
-        <UIButton onClick={() => setIsAddingRecurring(true)} class="">
-          <Plus size={18} />
-          Add Recurring
-        </UIButton>
       </div>
 
       {/* Loading State */}

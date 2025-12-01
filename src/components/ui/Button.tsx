@@ -1,4 +1,4 @@
-import type { Component, JSXElement } from "solid-js";
+import type { Component, JSX, JSXElement } from "solid-js";
 
 type ButtonProps = {
   onClick?: () => void;
@@ -7,6 +7,7 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset";
   children: JSXElement;
   disabled?: boolean;
+  style?: JSX.CSSProperties;
 };
 
 const UIButton: Component<ButtonProps> = ({
@@ -16,6 +17,7 @@ const UIButton: Component<ButtonProps> = ({
   class: className,
   type = "button",
   disabled = false,
+  style,
 }: ButtonProps) => {
   const styles =
     "w-max flex items-center justify-center gap-2 px-4 py-2 text-sm bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition-colors cursor-pointer " +
@@ -27,6 +29,7 @@ const UIButton: Component<ButtonProps> = ({
       class={styles}
       type={type}
       disabled={disabled}
+      style={style}
     >
       {children}
     </button>
