@@ -37,7 +37,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
         e.stopPropagation();
         form.handleSubmit();
       }}
-      class="space-y-4 text-gray-900"
+      class="space-y-4"
     >
       <form.Field
         name="amount"
@@ -55,7 +55,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
               onInput={(e) =>
                 field().handleChange(parseFloat(e.target.value) || 0)
               }
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -80,7 +80,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
               onInput={(e) => field().handleChange(e.target.value)}
               onBlur={() => field().handleBlur()}
               placeholder="e.g., Amazon: Portable Monitor"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -107,7 +107,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
                 <select
                   value={field().state.value}
                   onChange={(e) => field().handleChange(e.target.value)}
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none bg-gray-900"
                 >
                   <option value="" disabled selected hidden>
                     Select Account
@@ -141,7 +141,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
                 <select
                   value={field().state.value}
                   onChange={(e) => field().handleChange(e.target.value)}
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none bg-gray-900"
                 >
                   <option value="" disabled selected hidden>
                     Select Account
@@ -183,7 +183,7 @@ const TransferForm: Component<TransferFormProps> = (props) => {
                 field().handleChange(d);
               }}
               onBlur={() => field().handleBlur()}
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">

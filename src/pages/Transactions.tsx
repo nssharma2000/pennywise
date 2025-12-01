@@ -140,7 +140,7 @@ const Transactions: Component = () => {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            class="bg-white text-gray-800 rounded-lg p-6 max-w-md w-full"
+            class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
           >
             <h3 class="text-xl font-semibold mb-4">
               {editingTransaction() ? "Edit Transaction" : "Add Transaction"}

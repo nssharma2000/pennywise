@@ -1,5 +1,6 @@
-import { CreditCard, Pencil, PiggyBank, Plus, Trash2 } from "lucide-solid";
+import { CreditCard, Plus } from "lucide-solid";
 import { type Component, For, Show, createSignal } from "solid-js";
+import AccountCard from "~/components/AccountCard";
 import EmptyState from "~/components/EmptyState";
 import AccountForm from "~/components/forms/AccountForm";
 import UIButton from "~/components/ui/Button";
@@ -31,14 +32,6 @@ const Accounts: Component = () => {
   const [editingAccount, setEditingAccount] = createSignal<AccountType | null>(
     null
   );
-
-  const getAccountIcon = (type: AccountType["type"]) => {
-    return type === "bank_account" ? (
-      <PiggyBank size={24} />
-    ) : (
-      <CreditCard size={24} />
-    );
-  };
 
   const handleDelete = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
@@ -82,76 +75,12 @@ const Accounts: Component = () => {
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <For each={accounts()}>
           {(account) => (
-            <div class="bg-white text-gray-800 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-              {/* Account Header */}
-              <div class="flex items-start justify-between mb-3">
-                <div class="flex items-center gap-3">
-                  <div class="p-2 bg-purple-100 rounded-lg text-purple-600">
-                    {getAccountIcon(account.type)}
-                  </div>
-                  <div>
-                    <h3 class="font-semibold text-lg">{account.name}</h3>
-                    <p class="text-sm text-gray-500 capitalize">
-                      {account.type.replace("_", " ")}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Account Details */}
-              <div class="space-y-2 mb-4">
-                <Show
-                  when={account.type === "credit_card" && account.creditLimit}
-                >
-                  <div class="flex justify-between text-sm">
-                    <span class="text-gray-600">Credit Limit:</span>
-                    <span class="font-medium">
-                      {currency}
-                      {account.creditLimit?.toFixed(2)}
-                    </span>
-                  </div>
-                </Show>
-
-                <Show when={account.balance !== undefined}>
-                  <div class="flex justify-between text-sm">
-                    <span class="text-gray-600">Balance:</span>
-                    <span class="font-medium">
-                      {currency}
-                      {account.balance?.toFixed(2)}
-                    </span>
-                  </div>
-                </Show>
-
-                <Show
-                  when={account.billingCycleStart && account.billingCycleEnd}
-                >
-                  <div class="flex justify-between text-sm">
-                    <span class="text-gray-600">Billing Cycle:</span>
-                    <span class="font-medium">
-                      {account.billingCycleStart} - {account.billingCycleEnd}
-                    </span>
-                  </div>
-                </Show>
-              </div>
-
-              {/* Actions */}
-              <div class="flex gap-2">
-                <UIButton
-                  onClick={() => setEditingAccount(account)}
-                  class="bg-gray-100! hover:bg-gray-200! text-sm flex-1 text-slate-900!"
-                >
-                  <Pencil size={16} />
-                  Edit
-                </UIButton>
-                <UIButton
-                  onClick={() => handleDelete(account.id, account.name)}
-                  class="bg-red-50! hover:bg-red-100! text-red-600! rounded-lg text-sm"
-                >
-                  <Trash2 size={16} />
-                  Delete
-                </UIButton>
-              </div>
-            </div>
+            <AccountCard
+              account={account}
+              currency={currency}
+              setEditingAccount={setEditingAccount}
+              handleDelete={handleDelete}
+            />
           )}
         </For>
       </div>
@@ -166,7 +95,7 @@ const Accounts: Component = () => {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            class="bg-white text-gray-800 rounded-lg p-6 max-w-md w-full"
+            class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
           >
             <h3 class="text-xl font-semibold mb-4">
               {editingAccount() ? "Edit Account" : "Add Account"}

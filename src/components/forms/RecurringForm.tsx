@@ -66,7 +66,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
         e.stopPropagation();
         form.handleSubmit();
       }}
-      class="space-y-4 text-gray-900 h-min overflow-x-scroll"
+      class="space-y-4 h-min overflow-x-scroll"
     >
       {/* Recurring Type */}
       <Show when={!props.recurring}>
@@ -82,7 +82,8 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   field().handleChange(e.target.value as RecurringType["type"])
                 }
                 required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 
+focus-visible:border-transparent focus-visible:outline-none bg-gray-900"
               >
                 <For each={RecurringTypes}>
                   {(type: (typeof RecurringTypes)[number]) => (
@@ -104,7 +105,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
               onInput={(e) => field().handleChange(e.target.value)}
               onBlur={() => field().handleBlur()}
               placeholder="e.g., Amazon: Portable Monitor"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -127,7 +128,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                 field().handleChange(parseFloat(e.target.value) || 0)
               }
               required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
             />
             <Show when={field().state.meta.errors.length > 0}>
               <p class="text-red-500 text-sm mt-1">
@@ -145,7 +146,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
             <select
               value={field().state.value}
               onChange={(e) => field().handleChange(e.target.value)}
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none bg-gray-900"
             >
               <option value="" disabled selected hidden>
                 Select Account
@@ -178,7 +179,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
               onInput={(e) =>
                 field().handleChange(parseFloat(e.target.value) || 0)
               }
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               readOnly={isEMI()}
             />
             <Show when={field().state.meta.errors.length > 0}>
@@ -198,7 +199,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
               <select
                 value={field().state.value}
                 onChange={(e) => field().handleChange(e.target.value)}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none bg-gray-900"
               >
                 <For each={ExpenseCategories}>
                   {(type: (typeof ExpenseCategories)[number]) => (
@@ -228,7 +229,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   const val = parseFloat(e.target.value) || 0;
                   field().handleChange(val);
                 }}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               />
               <Show when={field().state.meta.errors.length > 0}>
                 <p class="text-red-500 text-sm mt-1">
@@ -254,7 +255,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   form.setFieldValue("amount", val);
                   field().handleChange(val);
                 }}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               />
               <Show when={field().state.meta.errors.length > 0}>
                 <p class="text-red-500 text-sm mt-1">
@@ -279,7 +280,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   const val = parseFloat(e.target.value) || 0;
                   field().handleChange(val);
                 }}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               />
               <Show when={field().state.meta.errors.length > 0}>
                 <p class="text-red-500 text-sm mt-1">
@@ -304,7 +305,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   const val = parseFloat(e.target.value) || 0;
                   field().handleChange(val);
                 }}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               />
               <Show when={field().state.meta.errors.length > 0}>
                 <p class="text-red-500 text-sm mt-1">
@@ -332,7 +333,7 @@ const RecurringForm: Component<RecurringFormProps> = (props) => {
                   field().handleChange(d);
                 }}
                 onBlur={() => field().handleBlur()}
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent focus-visible:outline-none"
               />
               <Show when={field().state.meta.errors.length > 0}>
                 <p class="text-red-500 text-sm mt-1">
