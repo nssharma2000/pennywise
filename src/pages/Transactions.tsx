@@ -4,12 +4,13 @@ import {
   SettingsIcon,
   SortAscIcon,
 } from "lucide-solid";
-import { For, Show, createSignal, type Component } from "solid-js";
+import { For, Show, createMemo, createSignal, type Component } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import ExpenseCard from "~/components/ExpenseCard";
 import AddButton from "~/components/FloatingButtons/AddButton";
 import MenuButton from "~/components/FloatingButtons/MenuButton";
 import IncomeCard from "~/components/IncomeCard";
+import Modal from "~/components/Modal";
 import TransactionForm from "~/components/TransactionForm";
 import TransferCard from "~/components/TransferCard";
 import UIButton from "~/components/ui/Button";
@@ -59,6 +60,15 @@ const Transactions: Component = () => {
   const [isAddingTransaction, setIsAddingTransaction] = createSignal(false);
   const [editingTransaction, setEditingTransaction] =
     createSignal<TransactionType | null>(null);
+
+  const isModalOpen = createMemo(
+    () => !!(isAddingTransaction() || editingTransaction())
+  );
+
+  const handleModalClose = () => {
+    setIsAddingTransaction(false);
+    setEditingTransaction(null);
+  };
 
   return (
     <div class="space-y-4">
@@ -142,43 +152,28 @@ const Transactions: Component = () => {
         </For>
       </div>
 
-      <Show when={isAddingTransaction() || editingTransaction()}>
-        <div
-          onClick={() => {
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={handleModalClose}
+        title={editingTransaction() ? "Edit Transaction" : "Add Transaction"}
+      >
+        <TransactionForm
+          selectedData={editingTransaction}
+          handleSubmit={async (
+            data: Omit<TransactionEntity, "id" | "createdAt">,
+            type: TransactionKind
+          ) => {
+            if (editingTransaction()) {
+              await update(editingTransaction()!.id, data, type);
+            } else {
+              await create(data, type);
+            }
             setIsAddingTransaction(false);
             setEditingTransaction(null);
           }}
-          class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
-          >
-            <h3 class="text-xl font-semibold mb-4">
-              {editingTransaction() ? "Edit Transaction" : "Add Transaction"}
-            </h3>
-            <TransactionForm
-              selectedData={editingTransaction}
-              handleSubmit={async (
-                data: Omit<TransactionEntity, "id" | "createdAt">,
-                type: TransactionKind
-              ) => {
-                if (editingTransaction()) {
-                  await update(editingTransaction()!.id, data, type);
-                } else {
-                  await create(data, type);
-                }
-                setIsAddingTransaction(false);
-                setEditingTransaction(null);
-              }}
-              handleCancel={() => {
-                setIsAddingTransaction(false);
-                setEditingTransaction(null);
-              }}
-            />
-          </div>
-        </div>
-      </Show>
+          handleCancel={handleModalClose}
+        />
+      </Modal>
     </div>
   );
 };

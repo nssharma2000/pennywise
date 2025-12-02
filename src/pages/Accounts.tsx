@@ -4,12 +4,13 @@ import {
   SettingsIcon,
   SortAscIcon,
 } from "lucide-solid";
-import { type Component, For, Show, createSignal } from "solid-js";
+import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import AccountCard from "~/components/AccountCard";
 import EmptyState from "~/components/EmptyState";
 import AddButton from "~/components/FloatingButtons/AddButton";
 import MenuButton from "~/components/FloatingButtons/MenuButton";
 import AccountForm from "~/components/forms/AccountForm";
+import Modal from "~/components/Modal";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
@@ -39,6 +40,15 @@ const Accounts: Component = () => {
   const [editingAccount, setEditingAccount] = createSignal<AccountType | null>(
     null
   );
+
+  const isModalOpen = createMemo(
+    () => !!(isAddingAccount() || editingAccount())
+  );
+
+  const handleModalClose = () => {
+    setIsAddingAccount(false);
+    setEditingAccount(null);
+  };
 
   const handleDelete = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
@@ -97,40 +107,28 @@ const Accounts: Component = () => {
         </For>
       </div>
 
-      <Show when={isAddingAccount() || editingAccount()}>
-        <div
-          onClick={() => {
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={handleModalClose}
+        title={editingAccount() ? "Edit Account" : "Add Account"}
+      >
+        <AccountForm
+          account={editingAccount() || undefined}
+          onSubmit={async (data: Omit<AccountType, "id" | "createdAt">) => {
+            if (editingAccount()) {
+              await update(editingAccount()!.id, data);
+            } else {
+              await create(data);
+            }
             setIsAddingAccount(false);
             setEditingAccount(null);
           }}
-          class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
-          >
-            <h3 class="text-xl font-semibold mb-4">
-              {editingAccount() ? "Edit Account" : "Add Account"}
-            </h3>
-            <AccountForm
-              account={editingAccount() || undefined}
-              onSubmit={async (data: Omit<AccountType, "id" | "createdAt">) => {
-                if (editingAccount()) {
-                  await update(editingAccount()!.id, data);
-                } else {
-                  await create(data);
-                }
-                setIsAddingAccount(false);
-                setEditingAccount(null);
-              }}
-              onCancel={() => {
-                setIsAddingAccount(false);
-                setEditingAccount(null);
-              }}
-            />
-          </div>
-        </div>
-      </Show>
+          onCancel={() => {
+            setIsAddingAccount(false);
+            setEditingAccount(null);
+          }}
+        />
+      </Modal>
     </div>
   );
 };

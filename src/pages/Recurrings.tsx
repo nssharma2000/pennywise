@@ -1,9 +1,10 @@
 import { CreditCard, SettingsIcon } from "lucide-solid";
-import { type Component, For, Show, createSignal } from "solid-js";
+import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import AddButton from "~/components/FloatingButtons/AddButton";
 import MenuButton from "~/components/FloatingButtons/MenuButton";
 import RecurringForm from "~/components/forms/RecurringForm";
+import Modal from "~/components/Modal";
 import RecurringCard from "~/components/RecurringCard";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
@@ -38,6 +39,10 @@ const Recurrings: Component = () => {
   const [editingRecurring, setEditingRecurring] =
     createSignal<RecurringType | null>(null);
 
+  const isModalOpen = createMemo(
+    () => !!(isAddingRecurring() || editingRecurring())
+  );
+
   const handleDelete = async (id: string) => {
     if (
       confirm(
@@ -49,6 +54,11 @@ const Recurrings: Component = () => {
   };
   const handleRecurringToggle = async (id: string, v: boolean) => {
     await toggle(id, v);
+  };
+
+  const handleModalClose = () => {
+    setIsAddingRecurring(false);
+    setEditingRecurring(null);
   };
 
   return (
@@ -101,44 +111,29 @@ const Recurrings: Component = () => {
         </For>
       </div>
 
-      <Show when={isAddingRecurring() || editingRecurring()}>
-        <div
-          onClick={() => {
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={handleModalClose}
+        title={
+          editingRecurring() ? "Edit Recurring" : "Add a Recurring Transaction"
+        }
+      >
+        <RecurringForm
+          recurring={editingRecurring() || undefined}
+          onSubmit={async (
+            data: Omit<RecurringType, "id" | "createdAt" | "isActive">
+          ) => {
+            if (editingRecurring()) {
+              await update(editingRecurring()!.id, data);
+            } else {
+              await create(data);
+            }
             setIsAddingRecurring(false);
             setEditingRecurring(null);
           }}
-          class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
-          >
-            <h3 class="text-xl font-semibold mb-4">
-              {editingRecurring()
-                ? "Edit Recurring"
-                : "Add a Recurring Transaction"}
-            </h3>
-            <RecurringForm
-              recurring={editingRecurring() || undefined}
-              onSubmit={async (
-                data: Omit<RecurringType, "id" | "createdAt" | "isActive">
-              ) => {
-                if (editingRecurring()) {
-                  await update(editingRecurring()!.id, data);
-                } else {
-                  await create(data);
-                }
-                setIsAddingRecurring(false);
-                setEditingRecurring(null);
-              }}
-              onCancel={() => {
-                setIsAddingRecurring(false);
-                setEditingRecurring(null);
-              }}
-            />
-          </div>
-        </div>
-      </Show>
+          onCancel={handleModalClose}
+        />
+      </Modal>
     </div>
   );
 };
