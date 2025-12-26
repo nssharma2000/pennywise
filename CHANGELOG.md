@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [v1.0] - 2025-12-26
+
+### Added
+
+- Added PWA Support
+- Recurring Transactions
+  - Auto-transactions
+- Incomes(Credits)
+- Self Account Transfers
+- Recurring Filter in Transactions
+- Settings Page
+  - Preferences
+  - Import - Export
+  - Clear Database
+- Made A Landing Page
+
+### Improved
+
+- Transactions Form
+- Transactions Page
+- App Flow
+
+---
+
 ## [v0.5] - 2025-11-05
 
 ### Added

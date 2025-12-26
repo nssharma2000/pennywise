@@ -59,7 +59,7 @@ Recurring
   - [X] Export
   - [X] Import
   - [X] Monthly Budget
-- [ ] Landing Page: Install Button, Fix Routes
+- [X] Landing Page: Install Button, Fix Routes
 
 ## v1.5
 
