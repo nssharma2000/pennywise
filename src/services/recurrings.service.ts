@@ -12,7 +12,6 @@ import type {
 export const recurringService = {
   // Get all recurrings
   getAll: async (): Promise<RecurringType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.recurrings.orderBy("createdAt").reverse().toArray();
   },
 

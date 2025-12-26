@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const profileSchema = z.object({
   monthlyIncome: z.number().min(0, "Income must be positive"),
+  monthlyBudget: z.number().min(0, "Budget must be positive"),
   currency: z.string().min(1, "Currency is required"),
 });
 

@@ -10,6 +10,7 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths(),
     VitePWA({
+      // disable: true,
       registerType: "autoUpdate", // auto-updates SW
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {

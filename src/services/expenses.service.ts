@@ -4,11 +4,9 @@ import type { ExpenseType } from "~/types";
 export const expenseService = {
   // Get all expenses
   getAll: async (): Promise<ExpenseType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.expenses.orderBy("date").reverse().toArray();
   },
   getAllWithoutTransfer: async (): Promise<ExpenseType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.expenses
       .orderBy("date")
       .and((expense) => !expense.transferID)
@@ -16,7 +14,6 @@ export const expenseService = {
       .toArray();
   },
   getAllWithoutRecurring: async (): Promise<ExpenseType[]> => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.expenses
       .orderBy("date")
       .and((income) => !income.recurringId)
@@ -24,7 +21,6 @@ export const expenseService = {
       .toArray();
   },
   getAllOnlyRecurring: async (): Promise<ExpenseType[]> => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.expenses
       .orderBy("date")
       .and((income) => !!income.recurringId)

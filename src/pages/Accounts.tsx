@@ -10,13 +10,13 @@ import Modal from "~/components/Modal";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
-import { useProfile } from "~/hooks/useProfiles";
+import { useSettings } from "~/hooks/useSettings";
 import type { AccountType } from "~/types";
 
 export const AccountTypes = [
+  { value: "bank_account", label: "Bank Account" },
   { value: "credit_card", label: "Credit Card" },
   { value: "debit_card", label: "Debit Card" },
-  { value: "bank_account", label: "Bank Account" },
 ] as const;
 
 const Accounts: Component = () => {
@@ -27,7 +27,7 @@ const Accounts: Component = () => {
     update,
     delete: deleteAccount,
   } = useAccounts();
-  const { profile } = useProfile();
+  const { profile } = useSettings();
   const navigate = useNavigate();
 
   const userProfile = profile();

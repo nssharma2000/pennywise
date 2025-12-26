@@ -14,7 +14,7 @@ import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import UITabs from "~/components/ui/Tabs";
 import { useAccounts } from "~/hooks/useAccounts";
-import { useProfile } from "~/hooks/useProfiles";
+import { useSettings } from "~/hooks/useSettings";
 import {
   RECURRING_FILTER_OPTIONS,
   TRANSACTION_TABS,
@@ -53,7 +53,7 @@ const Transactions: Component = () => {
     filters,
     filter,
   } = useTransactions();
-  const { profile } = useProfile();
+  const { profile } = useSettings();
   const navigate = useNavigate();
 
   const userProfile = profile();

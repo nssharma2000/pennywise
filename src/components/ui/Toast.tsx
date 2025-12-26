@@ -1,13 +1,13 @@
 import {
   Toast as KobalteToast,
-  toaster,
+  List,
   Region,
   Root,
-  List,
+  toaster,
 } from "@kobalte/core/toast";
+import { AlertCircle, CheckCircle, Info, X } from "lucide-solid";
 import { type Component, type JSX } from "solid-js";
 import { Portal } from "solid-js/web";
-import { X, CheckCircle, AlertCircle, Info } from "lucide-solid";
 import { cn } from "~/lib/utils";
 import Loader from "./Loader";
 
@@ -36,7 +36,7 @@ const ToastMessage: Component<ToastMessageProps> = (props) => {
       case "error":
         return AlertCircle;
       case "loading":
-        return Info;
+        return Loader;
       default:
         return Info;
     }
@@ -54,7 +54,7 @@ const ToastMessage: Component<ToastMessageProps> = (props) => {
         "data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-transform",
         "data-[swipe=end]:animate-out data-[swipe=end]:slide-out-to-right-full",
         "data-closed:animate-out data-[closed]:fade-out-80 data-[closed]:slide-out-to-right-full",
-        variantStyles[props.variant || "info"],
+        variantStyles[props.variant || "info"]
       )}
     >
       <IconComponent size={20} class="shrink-0 mt-0.5" />
@@ -108,7 +108,7 @@ function promise<T, U = Error>(
     loading?: JSX.Element;
     success?: (data: T) => JSX.Element;
     error?: (error: U) => JSX.Element;
-  },
+  }
 ) {
   return toaster.promise(promiseOrFn, (props) => {
     // Type guard to check which state we're in

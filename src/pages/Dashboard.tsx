@@ -11,7 +11,7 @@ import MenuButton from "~/components/FloatingButtons/MenuButton";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
 import { useExpenses } from "~/hooks/useExpenses";
-import { useProfile } from "~/hooks/useProfiles";
+import { useSettings } from "~/hooks/useSettings";
 
 const renderDashboardCard = (
   val: string | number | undefined | null,
@@ -32,7 +32,7 @@ const renderDashboardCard = (
 const Dashboard: Component = () => {
   const { expenses, loading: expensesLoading } = useExpenses();
   const { accounts, loading: accountsLoading } = useAccounts();
-  const { profile, loading: profileLoading } = useProfile();
+  const { profile, loading: profileLoading } = useSettings();
   const navigate = useNavigate();
 
   const userProfile = profile();

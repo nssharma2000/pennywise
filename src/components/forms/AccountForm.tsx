@@ -15,7 +15,7 @@ const AccountForm: Component<AccountFormProps> = (props) => {
   const form = createForm(() => ({
     defaultValues: {
       name: props.account?.name || "",
-      type: props.account?.type || "debit_card",
+      type: props.account?.type || "bank_account",
       balance: props.account?.balance || 0,
       creditLimit: props.account?.creditLimit || undefined,
       billingCycleStart: props.account?.billingCycleStart || undefined,

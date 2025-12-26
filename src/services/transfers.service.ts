@@ -6,7 +6,6 @@ import { incomeService } from "./incomes.service";
 export const transferService = {
   // Get all transfers
   getAll: async (): Promise<TransferType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.transfers.orderBy("date").reverse().toArray();
   },
 

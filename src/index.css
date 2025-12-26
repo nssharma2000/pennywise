@@ -37,6 +37,12 @@ nav {
   background-color: var(--background-color);
 }
 
+code {
+  @apply bg-gray-800 text-gray-100 font-mono text-sm
+         p-4 rounded-xl shadow-inner border border-gray-700
+         overflow-x-auto leading-relaxed overflow-y-scroll;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

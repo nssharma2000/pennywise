@@ -4,11 +4,9 @@ import type { IncomeType } from "~/types";
 export const incomeService = {
   // Get all incomes
   getAll: async (): Promise<IncomeType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.incomes.orderBy("date").reverse().toArray();
   },
   getAllWithoutTransfer: async (): Promise<IncomeType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.incomes
       .orderBy("date")
       .and((income) => !income.transferID)
@@ -16,7 +14,6 @@ export const incomeService = {
       .toArray();
   },
   getAllWithoutRecurring: async (): Promise<IncomeType[]> => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.incomes
       .orderBy("date")
       .and((income) => !income.recurringId)
@@ -24,7 +21,6 @@ export const incomeService = {
       .toArray();
   },
   getAllOnlyRecurring: async (): Promise<IncomeType[]> => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.incomes
       .orderBy("date")
       .and((income) => !!income.recurringId)

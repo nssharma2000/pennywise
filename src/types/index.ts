@@ -54,7 +54,7 @@ export interface RecurringType {
   accountId: string;
   description: string;
   type: RecurringKind;
-  isActive: BooleanType; //Boolean // togglable
+  isActive?: BooleanType; //Boolean // togglable
   category?: string;
   // for EMI specific:
   totalAmount?: number; // total loan amount
@@ -76,3 +76,13 @@ export interface TransferType {
   // We will also create two Expense/Income rows on transfer:
   createdAt: Date;
 }
+
+// TODO: Make Boolean Optional
+export type DBExportType = {
+  transfers: TransferType[];
+  incomes: IncomeType[];
+  expenses: ExpenseType[];
+  recurrings: RecurringType[];
+  accounts: AccountType[];
+  profile: ProfileType;
+};

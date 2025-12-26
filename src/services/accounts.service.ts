@@ -4,7 +4,6 @@ import type { AccountType } from "~/types";
 export const accountService = {
   // Get all accounts
   getAll: async (): Promise<AccountType[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return await db.accounts.orderBy("createdAt").reverse().toArray();
   },
 
@@ -20,7 +19,7 @@ export const accountService = {
 
   // Create account
   create: async (
-    payload: Omit<AccountType, "id" | "createdAt">,
+    payload: Omit<AccountType, "id" | "createdAt">
   ): Promise<string> => {
     const data: Omit<AccountType, "id" | "createdAt"> = {
       name: payload.name,

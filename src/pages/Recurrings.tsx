@@ -10,8 +10,8 @@ import RecurringCard from "~/components/RecurringCard";
 import UIButton from "~/components/ui/Button";
 import Loader from "~/components/ui/Loader";
 import { useAccounts } from "~/hooks/useAccounts";
-import { useProfile } from "~/hooks/useProfiles";
 import { useRecurrings } from "~/hooks/useRecurrings";
+import { useSettings } from "~/hooks/useSettings";
 import type { RecurringKind, RecurringType } from "~/types";
 
 export const { accounts } = useAccounts();
@@ -31,7 +31,7 @@ const Recurrings: Component = () => {
     delete: deleteRecurring,
     toggle,
   } = useRecurrings();
-  const { profile } = useProfile();
+  const { profile } = useSettings();
   const navigate = useNavigate();
 
   const userProfile = profile();
