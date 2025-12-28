@@ -95,6 +95,10 @@ const Transactions: Component = () => {
     navigate("/guide");
   };
 
+  const formTitle = createMemo(() =>
+    !!editingTransaction() ? "Edit Transaction" : "Add Transaction"
+  );
+
   return (
     <div class="space-y-4">
       <MenuButton
@@ -185,7 +189,8 @@ const Transactions: Component = () => {
       <Modal
         isOpen={isModalOpen}
         handleClose={handleModalClose}
-        title={editingTransaction() ? "Edit Transaction" : "Add Transaction"}
+        title={formTitle()}
+        titleGetter={formTitle}
       >
         <TransactionForm
           selectedData={editingTransaction}

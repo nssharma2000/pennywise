@@ -4,6 +4,7 @@ type ModalPropsType = {
   handleClose: () => void;
   isOpen: Accessor<boolean>;
   title: string;
+  titleGetter?: Accessor<string>;
   children: JSXElement;
 };
 
@@ -12,6 +13,7 @@ const Modal: Component<ModalPropsType> = ({
   handleClose,
   isOpen,
   title,
+  titleGetter,
 }) => {
   return (
     <Show when={isOpen()}>
@@ -26,7 +28,7 @@ const Modal: Component<ModalPropsType> = ({
           class="bg-gray-900 text-gray-200 rounded-lg p-6 max-w-md w-full max-h-[80vh] flex flex-col"
         >
           <h3 class="text-xl font-semibold mb-4 w-full border-b border-slate-800 pb-3">
-            {title}
+            {titleGetter ? titleGetter() : title}
           </h3>
           {children}
         </div>

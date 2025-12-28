@@ -10,7 +10,7 @@ function UITabs<T extends string>({
   tabs: { label: JSXElement; value: T; content?: JSXElement }[];
   currentTab?: Accessor<T>;
   setCurrentTab?: (v: T) => void;
-  disabled?: boolean;
+  disabled?: Accessor<boolean>;
 }) {
   return (
     <>
@@ -19,7 +19,7 @@ function UITabs<T extends string>({
         class="tabs w-full"
         value={currentTab!()}
         onChange={(v) => setCurrentTab!(v as T)}
-        disabled={disabled}
+        disabled={disabled && disabled()}
       >
         <Tabs.List class="tabs__list relative flex items-center border-b border-b-slate-300">
           <For each={tabs}>

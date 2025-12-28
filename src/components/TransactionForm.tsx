@@ -86,7 +86,7 @@ const TransactionForm = ({
         ]}
         currentTab={currentForm}
         setCurrentTab={setCurrentForm}
-        disabled={isEditing()}
+        disabled={isEditing}
       />
     </>
   );

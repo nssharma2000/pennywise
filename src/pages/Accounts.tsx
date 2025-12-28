@@ -59,6 +59,10 @@ const Accounts: Component = () => {
     navigate("/guide");
   };
 
+  const formTitle = createMemo(() =>
+    !!editingAccount() ? "Edit Account" : "Add Account"
+  );
+
   return (
     <div class="space-y-4">
       <MenuButton
@@ -118,7 +122,8 @@ const Accounts: Component = () => {
       <Modal
         isOpen={isModalOpen}
         handleClose={handleModalClose}
-        title={editingAccount() ? "Edit Account" : "Add Account"}
+        title={formTitle()}
+        titleGetter={formTitle}
       >
         <AccountForm
           account={editingAccount() || undefined}

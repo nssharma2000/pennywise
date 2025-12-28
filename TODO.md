@@ -62,7 +62,7 @@ Recurring
 - [X] Landing Page: Install Button, Fix Routes
 - [X] Guide Page
 - Bugs:
-  - [ ] Edit Transition needs to block tabs
+  - [X] Edit Transition needs to block tabs
   - [X] Accounts are not refreshed in add transaction form
   - [X] Remove Debit Card
 

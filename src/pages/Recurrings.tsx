@@ -69,6 +69,10 @@ const Recurrings: Component = () => {
     navigate("/guide");
   };
 
+  const formTitle = createMemo(() =>
+    !!editingRecurring() ? "Edit Recurring" : "Add Recurring Transaction"
+  );
+
   return (
     <div class="space-y-4">
       <MenuButton
@@ -129,9 +133,8 @@ const Recurrings: Component = () => {
       <Modal
         isOpen={isModalOpen}
         handleClose={handleModalClose}
-        title={
-          editingRecurring() ? "Edit Recurring" : "Add a Recurring Transaction"
-        }
+        title={formTitle()}
+        titleGetter={formTitle}
       >
         <RecurringForm
           recurring={editingRecurring() || undefined}
