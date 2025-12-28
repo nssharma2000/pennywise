@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [v1.0] - 2025-12-26
+## [v1.0] - 2025-12-28
 
 ### Added
 
@@ -22,12 +22,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Import - Export
   - Clear Database
 - Made A Landing Page
+- Made A Guide Page
 
 ### Improved
 
 - Transactions Form
 - Transactions Page
 - App Flow
+
+### Bug Fixes
+
+-
 
 ---
 

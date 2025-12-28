@@ -60,6 +60,11 @@ Recurring
   - [X] Import
   - [X] Monthly Budget
 - [X] Landing Page: Install Button, Fix Routes
+- [X] Guide Page
+- Bugs:
+  - [ ] Edit Transition needs to block tabs
+  - [ ] Accounts are not refreshed in add transaction form
+  - [ ] Remove Debit Card
 
 ## v1.5
 

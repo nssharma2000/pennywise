@@ -1,7 +1,9 @@
-import { Show, type Component } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+import { onMount, Show, type Component } from "solid-js";
 import UIButton from "~/components/ui/Button";
 import { useInstallPrompt } from "~/hooks/useInstallPrompt";
 import { useServiceWorker } from "~/hooks/useServiceWorker";
+import { isPWAInstalled } from "~/lib/pwa";
 
 const Feature = (props: { title: string }) => (
   <div
@@ -26,6 +28,13 @@ const Divider = () => (
 const LandingPage: Component = () => {
   const { needRefresh, reloadApp, offlineReady } = useServiceWorker();
   const { canInstall, promptInstall } = useInstallPrompt();
+  const navigate = useNavigate();
+
+  onMount(() => {
+    if (isPWAInstalled()) {
+      navigate("/transactions", { replace: true });
+    }
+  });
 
   return (
     <div class="relative bg-[#06040b] text-[#e2d7ff] min-h-screen">
@@ -99,6 +108,9 @@ const LandingPage: Component = () => {
         <p class="mt-4 max-w-xl mx-auto text-gray-400">
           PennyWise is a local-only personal finance app. It runs entirely in
           your browser, works offline, and keeps your data on your device.
+          <a href="/guide" class="ml-1 underline! underline-offset-4">
+            Learn More
+          </a>
         </p>
       </section>
       <Divider />
@@ -127,7 +139,6 @@ const LandingPage: Component = () => {
           tracking. No servers. Once installed, it works fully offline.
         </p>
       </section>
-      <Divider />
       <section class="py-20 px-6 text-center">
         <h2 class="text-2xl font-semibold text-[#e2d7ff] relative inline-block">
           Start Using PennyWise

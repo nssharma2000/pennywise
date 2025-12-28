@@ -6,6 +6,7 @@ import Settings from "~/pages/Settings";
 import Transactions from "~/pages/Transactions";
 import { useRecurringGenerator } from "./hooks/useRecurringGenerator";
 import Dashboard from "./pages/Dashboard";
+import GuidePage from "./pages/GuidePage";
 import LandingPage from "./pages/LandingPage";
 import Recurrings from "./pages/Recurrings";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/settings" component={Settings} />
           <Route path="/recurrings" component={Recurrings} />
         </Route>
+        <Route path="/guide" component={GuidePage} />
         <Route path="*404" component={LandingPage} />
       </Router>
       <Toast />

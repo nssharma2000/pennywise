@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { CreditCard, SettingsIcon } from "lucide-solid";
+import { BadgeQuestionMarkIcon, CreditCard, SettingsIcon } from "lucide-solid";
 import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import AddButton from "~/components/FloatingButtons/AddButton";
@@ -65,6 +65,9 @@ const Recurrings: Component = () => {
   const onSettingsClick = () => {
     navigate("/settings");
   };
+  const onGuideClick = () => {
+    navigate("/guide");
+  };
 
   return (
     <div class="space-y-4">
@@ -72,6 +75,11 @@ const Recurrings: Component = () => {
         position="bottom-right"
         items={[
           { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
+          {
+            label: "Guide",
+            icon: BadgeQuestionMarkIcon,
+            onClick: onGuideClick,
+          },
         ]}
       />
       <AddButton handleClick={() => setIsAddingRecurring(true)} />

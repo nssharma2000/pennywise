@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { CreditCard, SettingsIcon } from "lucide-solid";
+import { BadgeQuestionMarkIcon, CreditCard, SettingsIcon } from "lucide-solid";
 import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import AccountCard from "~/components/AccountCard";
 import EmptyState from "~/components/EmptyState";
@@ -55,6 +55,9 @@ const Accounts: Component = () => {
   const onSettingsClick = () => {
     navigate("/settings");
   };
+  const onGuideClick = () => {
+    navigate("/guide");
+  };
 
   return (
     <div class="space-y-4">
@@ -62,6 +65,11 @@ const Accounts: Component = () => {
         position="bottom-right"
         items={[
           { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
+          {
+            label: "Guide",
+            icon: BadgeQuestionMarkIcon,
+            onClick: onGuideClick,
+          },
           // { label: "Sort", icon: SortAscIcon, onClick() {} },
           // { label: "Filter", icon: FilterIcon, onClick() {} },
         ]}

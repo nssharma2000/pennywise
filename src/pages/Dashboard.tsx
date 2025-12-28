@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { SettingsIcon } from "lucide-solid";
+import { BadgeQuestionMarkIcon, SettingsIcon } from "lucide-solid";
 import {
   createMemo,
   For,
@@ -53,6 +53,9 @@ const Dashboard: Component = () => {
   const onSettingsClick = () => {
     navigate("/settings");
   };
+  const onGuideClick = () => {
+    navigate("/guide");
+  };
 
   return (
     <div class="flex flex-col gap-6 text-xl">
@@ -60,6 +63,11 @@ const Dashboard: Component = () => {
         position="bottom-right"
         items={[
           { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
+          {
+            label: "Guide",
+            icon: BadgeQuestionMarkIcon,
+            onClick: onGuideClick,
+          },
         ]}
       />
       <p class="flex gap-4 items-end">
