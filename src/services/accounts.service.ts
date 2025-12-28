@@ -26,7 +26,7 @@ export const accountService = {
       type: payload.type,
     };
     // Check for Fields
-    if (["bank_account", "debit_card"].includes(data.type)) {
+    if (["bank_account"].includes(data.type)) {
       data.balance = payload.balance;
     }
     if (["credit_card"].includes(data.type)) {

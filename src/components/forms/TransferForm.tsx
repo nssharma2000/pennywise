@@ -1,8 +1,8 @@
 import { createForm } from "@tanstack/solid-form";
 import { format } from "date-fns";
 import { createMemo, For, Show, type Component } from "solid-js";
+import { useAccounts } from "~/hooks/useAccounts";
 import { transferSchema, type TransferFormData } from "~/lib/validations";
-import { accounts } from "~/pages/Transactions";
 import type { AccountType, TransferType } from "~/types";
 import UIButton from "../ui/Button";
 
@@ -13,6 +13,8 @@ interface TransferFormProps {
 }
 
 const TransferForm: Component<TransferFormProps> = (props) => {
+  const { accounts } = useAccounts();
+
   const form = createForm(() => ({
     defaultValues: {
       fromAccountID: props.transfer?.fromAccountID || "",

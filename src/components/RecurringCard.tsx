@@ -10,7 +10,7 @@ import {
   Trash2,
 } from "lucide-solid";
 import { createMemo, createSignal, Show } from "solid-js";
-import { accounts } from "~/pages/Recurrings";
+import { useAccounts } from "~/hooks/useAccounts";
 import type { RecurringType } from "~/types";
 import UIButton from "./ui/Button";
 
@@ -27,6 +27,8 @@ const RecurringCard = ({
   handleDelete: (recurringId: string) => void;
   handleRecurringToggle: (v: boolean) => void;
 }) => {
+  const { accounts } = useAccounts();
+
   const [isExpanded, setIsExpanded] = createSignal(false);
   const account = createMemo(() =>
     accounts()?.find((acc) => acc.id === recurring.accountId)

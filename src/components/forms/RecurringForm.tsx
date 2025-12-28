@@ -1,11 +1,12 @@
 import { createForm } from "@tanstack/solid-form";
 import { format } from "date-fns";
 import { createMemo, For, Show, type Component } from "solid-js";
+import { useAccounts } from "~/hooks/useAccounts";
 import {
   recurringCreateSchema,
   type RecurringFormData,
 } from "~/lib/validations";
-import { accounts, RecurringTypes } from "~/pages/Recurrings";
+import { RecurringTypes } from "~/pages/Recurrings";
 import { ExpenseCategories } from "~/pages/Transactions";
 import type { AccountType, RecurringType } from "~/types";
 import UIButton from "../ui/Button";
@@ -17,6 +18,8 @@ interface RecurringFormProps {
 }
 
 const RecurringForm: Component<RecurringFormProps> = (props) => {
+  const { accounts } = useAccounts();
+
   const form = createForm(() => ({
     validators: {
       onChange: recurringCreateSchema,

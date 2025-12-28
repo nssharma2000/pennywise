@@ -1,8 +1,9 @@
 import { createForm } from "@tanstack/solid-form";
 import { format } from "date-fns";
 import { For, Show, type Component } from "solid-js";
+import { useAccounts } from "~/hooks/useAccounts";
 import { expenseSchema, type ExpenseFormData } from "~/lib/validations";
-import { ExpenseCategories, accounts } from "~/pages/Transactions";
+import { ExpenseCategories } from "~/pages/Transactions";
 import type { AccountType, ExpenseType } from "~/types";
 import UIButton from "../ui/Button";
 
@@ -13,6 +14,8 @@ interface ExpenseFormProps {
 }
 
 const ExpenseForm: Component<ExpenseFormProps> = (props) => {
+  const { accounts } = useAccounts();
+
   const form = createForm(() => ({
     defaultValues: {
       accountId: props.expense?.accountId || "",

@@ -8,7 +8,7 @@ export const profileSchema = z.object({
 
 export const accountSchema = z.object({
   name: z.string().min(1, "Account name is required"),
-  type: z.enum(["credit_card", "debit_card", "bank_account"]),
+  type: z.enum(["credit_card", "bank_account"]),
   balance: z.number().optional(),
   creditLimit: z.number().optional(),
   billingCycleStart: z.number().min(1).max(31).optional(),

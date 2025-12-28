@@ -16,7 +16,7 @@ import type { AccountType } from "~/types";
 export const AccountTypes = [
   { value: "bank_account", label: "Bank Account" },
   { value: "credit_card", label: "Credit Card" },
-  { value: "debit_card", label: "Debit Card" },
+  // { value: "debit_card", label: "Debit Card" },
 ] as const;
 
 const Accounts: Component = () => {

@@ -63,8 +63,8 @@ Recurring
 - [X] Guide Page
 - Bugs:
   - [ ] Edit Transition needs to block tabs
-  - [ ] Accounts are not refreshed in add transaction form
-  - [ ] Remove Debit Card
+  - [X] Accounts are not refreshed in add transaction form
+  - [X] Remove Debit Card
 
 ## v1.5
 

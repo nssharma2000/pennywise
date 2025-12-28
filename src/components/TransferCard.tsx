@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { ArrowRight, Landmark, Pencil, Trash2 } from "lucide-solid";
 import { createMemo, createSignal, Show } from "solid-js";
+import { useAccounts } from "~/hooks/useAccounts";
 import type { TransferFullType } from "~/hooks/useTransfers";
-import { accounts } from "~/pages/Transactions";
 import UIButton from "./ui/Button";
 
 const TransferCard = ({
@@ -16,6 +16,8 @@ const TransferCard = ({
   setEditingTransfer: (income: TransferFullType) => void;
   handleDelete: (incomeId: string) => void;
 }) => {
+  const { accounts } = useAccounts();
+
   const [isExpanded, setIsExpanded] = createSignal(false);
   const fromAccount = createMemo(() =>
     accounts()?.find((acc) => acc.id === income.fromAccountID)

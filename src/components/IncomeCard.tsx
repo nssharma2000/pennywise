@@ -2,7 +2,7 @@ import { Badge } from "@kobalte/core/badge";
 import { format } from "date-fns";
 import { IndianRupee, Pencil, Trash2 } from "lucide-solid";
 import { createMemo, createSignal, Show } from "solid-js";
-import { accounts } from "~/pages/Transactions";
+import { useAccounts } from "~/hooks/useAccounts";
 import type { IncomeType } from "~/types";
 import UIButton from "./ui/Button";
 
@@ -17,6 +17,8 @@ const IncomeCard = ({
   setEditingIncome: (income: IncomeType) => void;
   handleDelete: (incomeId: string) => void;
 }) => {
+  const { accounts } = useAccounts();
+
   const [isExpanded, setIsExpanded] = createSignal(false);
   const account = createMemo(() =>
     accounts()?.find((acc) => acc.id === income.accountId)

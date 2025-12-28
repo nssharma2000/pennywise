@@ -5,7 +5,7 @@ const booleanValidation = z.union([z.literal(0), z.literal(1)]).optional();
 const accountSchema = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(["credit_card", "debit_card", "bank_account"]),
+  type: z.enum(["credit_card", "bank_account"]),
   balance: z.number().optional(),
   creditLimit: z.number().optional(),
   billingCycleStart: z.number().optional(),

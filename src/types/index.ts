@@ -13,7 +13,7 @@ export interface ProfileType {
 export interface AccountType {
   id: string;
   name: string;
-  type: "credit_card" | "debit_card" | "bank_account";
+  type: "credit_card" | "bank_account";
   balance?: number;
   creditLimit?: number;
   billingCycleStart?: number; // day of month

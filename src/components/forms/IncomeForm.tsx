@@ -1,8 +1,9 @@
 import { createForm } from "@tanstack/solid-form";
 import { format } from "date-fns";
 import { createMemo, For, Show, type Component } from "solid-js";
+import { useAccounts } from "~/hooks/useAccounts";
 import { incomeSchema, type IncomeFormData } from "~/lib/validations";
-import { accounts, IncomeCategories } from "~/pages/Transactions";
+import { IncomeCategories } from "~/pages/Transactions";
 import type { AccountType, IncomeType } from "~/types";
 import UIButton from "../ui/Button";
 
@@ -13,6 +14,8 @@ interface IncomeFormProps {
 }
 
 const IncomeForm: Component<IncomeFormProps> = (props) => {
+  const { accounts } = useAccounts();
+
   const form = createForm(() => ({
     defaultValues: {
       accountId: props.income?.accountId || "",
