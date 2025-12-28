@@ -1,3 +1,5 @@
+import { useNavigate } from "@solidjs/router";
+import { BadgeQuestionMarkIcon, SettingsIcon } from "lucide-solid";
 import { type Component, createSignal, For, Show } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -15,6 +17,7 @@ interface MenuButtonProps {
 
 const MenuButton: Component<MenuButtonProps> = (props) => {
   const [isOpen, setIsOpen] = createSignal(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen());
@@ -38,6 +41,23 @@ const MenuButton: Component<MenuButtonProps> = (props) => {
   };
 
   const positions = getPositionClasses();
+
+  const onSettingsClick = () => {
+    navigate("/settings");
+  };
+  const onGuideClick = () => {
+    navigate("/guide");
+  };
+
+  const allOptions: HamburgerMenuItem[] = [
+    { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
+    {
+      label: "Guide",
+      icon: BadgeQuestionMarkIcon,
+      onClick: onGuideClick,
+    },
+    ...props.items,
+  ];
 
   return (
     <>
@@ -109,7 +129,7 @@ const MenuButton: Component<MenuButtonProps> = (props) => {
 
         {/* Menu Items */}
         <Show when={isOpen()}>
-          <For each={props.items}>
+          <For each={allOptions}>
             {(item, index) => (
               <button
                 onClick={() => {

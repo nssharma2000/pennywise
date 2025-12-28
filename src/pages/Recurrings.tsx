@@ -1,5 +1,4 @@
-import { useNavigate } from "@solidjs/router";
-import { BadgeQuestionMarkIcon, CreditCard, SettingsIcon } from "lucide-solid";
+import { CreditCard } from "lucide-solid";
 import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import AddButton from "~/components/FloatingButtons/AddButton";
@@ -32,7 +31,6 @@ const Recurrings: Component = () => {
     toggle,
   } = useRecurrings();
   const { profile } = useSettings();
-  const navigate = useNavigate();
 
   const userProfile = profile();
   const currency = userProfile?.currency || "₹";
@@ -62,12 +60,6 @@ const Recurrings: Component = () => {
     setIsAddingRecurring(false);
     setEditingRecurring(null);
   };
-  const onSettingsClick = () => {
-    navigate("/settings");
-  };
-  const onGuideClick = () => {
-    navigate("/guide");
-  };
 
   const formTitle = createMemo(() =>
     !!editingRecurring() ? "Edit Recurring" : "Add Recurring Transaction"
@@ -75,17 +67,7 @@ const Recurrings: Component = () => {
 
   return (
     <div class="space-y-4">
-      <MenuButton
-        position="bottom-right"
-        items={[
-          { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
-          {
-            label: "Guide",
-            icon: BadgeQuestionMarkIcon,
-            onClick: onGuideClick,
-          },
-        ]}
-      />
+      <MenuButton position="bottom-right" items={[]} />
       <AddButton handleClick={() => setIsAddingRecurring(true)} />
       {/* Header */}
       <div class="flex items-center justify-between">

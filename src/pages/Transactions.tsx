@@ -1,10 +1,4 @@
-import { useNavigate } from "@solidjs/router";
-import {
-  BadgeQuestionMarkIcon,
-  CreditCard,
-  FilterIcon,
-  SettingsIcon,
-} from "lucide-solid";
+import { CreditCard, FilterIcon } from "lucide-solid";
 import { For, Show, createMemo, createSignal, type Component } from "solid-js";
 import EmptyState from "~/components/EmptyState";
 import ExpenseCard from "~/components/ExpenseCard";
@@ -59,7 +53,6 @@ const Transactions: Component = () => {
     filter,
   } = useTransactions();
   const { profile } = useSettings();
-  const navigate = useNavigate();
 
   const userProfile = profile();
   const currency = userProfile?.currency || "₹";
@@ -88,12 +81,6 @@ const Transactions: Component = () => {
   const currentRecurringFilter = createMemo(
     () => filters.expense().recurringFilter
   );
-  const onSettingsClick = () => {
-    navigate("/settings");
-  };
-  const onGuideClick = () => {
-    navigate("/guide");
-  };
 
   const formTitle = createMemo(() =>
     !!editingTransaction() ? "Edit Transaction" : "Add Transaction"
@@ -104,12 +91,6 @@ const Transactions: Component = () => {
       <MenuButton
         position="bottom-right"
         items={[
-          { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
-          {
-            label: "Guide",
-            icon: BadgeQuestionMarkIcon,
-            onClick: onGuideClick,
-          },
           // { label: "Sort", icon: SortAscIcon, onClick() {} },
           { label: "Filter", icon: FilterIcon, onClick: handleFilterClick },
         ]}

@@ -1,5 +1,4 @@
-import { useNavigate } from "@solidjs/router";
-import { BadgeQuestionMarkIcon, CreditCard, SettingsIcon } from "lucide-solid";
+import { CreditCard } from "lucide-solid";
 import { type Component, For, Show, createMemo, createSignal } from "solid-js";
 import AccountCard from "~/components/AccountCard";
 import EmptyState from "~/components/EmptyState";
@@ -28,7 +27,6 @@ const Accounts: Component = () => {
     delete: deleteAccount,
   } = useAccounts();
   const { profile } = useSettings();
-  const navigate = useNavigate();
 
   const userProfile = profile();
   const currency = userProfile?.currency || "₹";
@@ -52,12 +50,6 @@ const Accounts: Component = () => {
       await deleteAccount(id);
     }
   };
-  const onSettingsClick = () => {
-    navigate("/settings");
-  };
-  const onGuideClick = () => {
-    navigate("/guide");
-  };
 
   const formTitle = createMemo(() =>
     !!editingAccount() ? "Edit Account" : "Add Account"
@@ -67,16 +59,12 @@ const Accounts: Component = () => {
     <div class="space-y-4">
       <MenuButton
         position="bottom-right"
-        items={[
-          { label: "Settings", icon: SettingsIcon, onClick: onSettingsClick },
-          {
-            label: "Guide",
-            icon: BadgeQuestionMarkIcon,
-            onClick: onGuideClick,
-          },
-          // { label: "Sort", icon: SortAscIcon, onClick() {} },
-          // { label: "Filter", icon: FilterIcon, onClick() {} },
-        ]}
+        items={
+          [
+            // { label: "Sort", icon: SortAscIcon, onClick() {} },
+            // { label: "Filter", icon: FilterIcon, onClick() {} },
+          ]
+        }
       />
       <AddButton handleClick={() => setIsAddingAccount(true)} />
       {/* Header */}
